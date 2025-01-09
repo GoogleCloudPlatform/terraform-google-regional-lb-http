@@ -33,9 +33,19 @@ locals {
   }
 
   # Find a backend service to be used for url_map in absence of host "*" and path "/*"
-  first_host            = keys(local.backend_services_by_host)[0]
-  first_path            = keys(local.backend_services_by_host[local.first_host])[0]
-  first_backend_service = local.backend_services_by_host[local.first_host][local.first_path]
+  first_host            = try(keys(local.backend_services_by_host)[0], null)
+  first_path            = try(keys(local.backend_services_by_host[local.first_host])[0], null)
+  first_backend_service = try(local.backend_services_by_host[local.first_host][local.first_path], null)
+}
+
+resource "google_compute_subnetwork" "proxy_only" {
+  name          = "${var.name}-proxy-only-subnetwork"
+  ip_cidr_range = var.proxy_only_subnet_ip
+  network       = var.network
+  purpose       = "REGIONAL_MANAGED_PROXY"
+  region        = var.region
+  project       = var.project_id
+  role          = "ACTIVE"
 }
 
 ### IPv4 ###
@@ -50,7 +60,7 @@ resource "google_compute_forwarding_rule" "default" {
   load_balancing_scheme = var.load_balancing_scheme
   labels                = var.labels
   network               = var.network
-  depends_on            = [var.proxy_subnetwork]
+  depends_on            = [google_compute_subnetwork.proxy_only]
 }
 
 resource "google_compute_forwarding_rule" "https" {
@@ -63,7 +73,7 @@ resource "google_compute_forwarding_rule" "https" {
   ip_address            = local.address
   labels                = var.labels
   network               = var.network
-  depends_on            = [var.proxy_subnetwork]
+  depends_on            = [google_compute_subnetwork.proxy_only]
 }
 
 resource "google_compute_global_address" "default" {
@@ -119,13 +129,6 @@ resource "google_compute_region_url_map" "default" {
     }
   }
 }
-
-# resource "google_compute_region_url_map" "default" {
-#   name            = "${var.name}-url-map-default"
-#   default_service = local.backend_services_by_host["*"]["/*"]
-#   region          = var.region
-#   project = var.project_id
-# }
 
 resource "google_compute_region_target_http_proxy" "default" {
   count   = local.create_http_forward ? 1 : 0

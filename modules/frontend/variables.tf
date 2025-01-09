@@ -14,20 +14,58 @@
  * limitations under the License.
  */
 
-variable "name" {
-  description = "Name for the forwarding rule and prefix for supporting resources"
-  type        = string
-}
-
 variable "project_id" {
-  description = "The project to deploy to, if not set the default provider project is used."
+  description = "The project to deploy load balancer frontend resources.."
   type        = string
 }
 
 variable "region" {
   description = "The region where the load balancer will be created"
   type        = string
-  default     = "us-central1"
+}
+
+variable "name" {
+  description = "Name for the forwarding rule and prefix for supporting resources"
+  type        = string
+}
+
+variable "network" {
+  description = "VPC network for the forwarding rule. It should not be default"
+  type        = string
+}
+
+variable "proxy_only_subnet_ip" {
+  description = "ip_cidr_range for creating proxy_only subnetwork in the provided VPC network."
+  type        = string
+  default     = "10.129.0.0/23"
+}
+
+variable "load_balancing_scheme" {
+  description = "Load balancing scheme type (EXTERNAL for classic external load balancer, EXTERNAL_MANAGED for Envoy-based load balancer, and INTERNAL_SELF_MANAGED for traffic director)"
+  type        = string
+  default     = "EXTERNAL_MANAGED"
+}
+
+variable "create_url_map" {
+  description = "Set to `false` if url_map_resource_uri variable is provided."
+  type        = bool
+  default     = true
+}
+
+variable "url_map_input" {
+  description = "List of host, path and backend service for creating url_map when create_url_map is set to true."
+  type = list(object({
+    host            = string
+    path            = string
+    backend_service = string
+  }))
+  default = []
+}
+
+variable "url_map_resource_uri" {
+  description = "The url_map resource to use. This is the resource uri of the url map created out of band."
+  type        = string
+  default     = null
 }
 
 variable "create_address" {
@@ -46,12 +84,6 @@ variable "labels" {
   description = "The labels to attach to resources created by this module"
   type        = map(string)
   default     = {}
-}
-
-variable "load_balancing_scheme" {
-  description = "Load balancing scheme type (EXTERNAL for classic external load balancer, EXTERNAL_MANAGED for Envoy-based load balancer, and INTERNAL_SELF_MANAGED for traffic director)"
-  type        = string
-  default     = "EXTERNAL_MANAGED"
 }
 
 variable "ssl" {
@@ -96,22 +128,6 @@ variable "random_certificate_suffix" {
   default     = false
 }
 
-variable "url_map_input" {
-  description = "List of host, path and backend service for creating url_map"
-  type = list(object({
-    host            = string
-    path            = string
-    backend_service = string
-  }))
-  default = []
-}
-
-variable "network" {
-  description = "Network for INTERNAL_SELF_MANAGED load balancing scheme"
-  type        = string
-  default     = "default"
-}
-
 variable "http_port" {
   description = "The port for the HTTP load balancer"
   type        = number
@@ -130,18 +146,6 @@ variable "https_port" {
     condition     = var.https_port >= 1 && var.https_port <= 65535
     error_message = "You must specify exactly one port between 1 and 65535"
   }
-}
-
-variable "create_url_map" {
-  description = "Set to `false` if url_map variable is provided."
-  type        = bool
-  default     = true
-}
-
-variable "url_map_resource_uri" {
-  description = "The url_map resource to use. Default is to send all traffic to first backend."
-  type        = string
-  default     = null
 }
 
 variable "https_redirect" {
@@ -171,11 +175,5 @@ variable "server_tls_policy" {
 variable "http_keep_alive_timeout_sec" {
   description = "Specifies how long to keep a connection open, after completing a response, while there is no matching traffic (in seconds)."
   type        = number
-  default     = null
-}
-
-variable "proxy_subnetwork" {
-  description = "subnetwork for the proxy."
-  type        = string
   default     = null
 }

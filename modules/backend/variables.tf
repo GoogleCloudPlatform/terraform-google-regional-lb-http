@@ -14,19 +14,59 @@
  * limitations under the License.
  */
 
-variable "name" {
-  description = "Name for the backend service."
-  type        = string
-}
-
 variable "project_id" {
-  description = "The project to deploy to, if not set the default provider project is used."
+  description = "The project to deploy load balancer backend resources."
   type        = string
 }
 
 variable "region" {
   description = "The region where the load balancer backend service will be created"
   type        = string
+}
+
+variable "name" {
+  description = "Name for the load balancer backend service."
+  type        = string
+}
+
+variable "host_path_mappings" {
+  description = "The list of host/path for which traffic should be sent to this backend service"
+  type = list(object({
+    host = string
+    path = string
+  }))
+  default = [{ host : "*", path : "/*" }]
+}
+
+variable "serverless_neg_backends" {
+  description = "The list of serverless backends which serves the traffic. A region can have only one serverless backend."
+  type = list(object({
+    region          = string
+    type            = string // cloud-run, cloud-function, and app-engine
+    service_name    = string
+    service_version = optional(string)
+    capacity_scaler = optional(number, 1.0)
+  }))
+  default = []
+}
+
+variable "groups" {
+  description = "The list of backend instance group which serves the traffic."
+  type = list(object({
+    group       = string
+    description = optional(string)
+
+    balancing_mode               = optional(string)
+    capacity_scaler              = optional(number, 1.0)
+    max_connections              = optional(number)
+    max_connections_per_instance = optional(number)
+    max_connections_per_endpoint = optional(number)
+    max_rate                     = optional(number)
+    max_rate_per_instance        = optional(number)
+    max_rate_per_endpoint        = optional(number)
+    max_utilization              = optional(number)
+  }))
+  default = []
 }
 
 variable "load_balancing_scheme" {
@@ -50,48 +90,6 @@ variable "port_name" {
 variable "description" {
   description = "Description of the backend service."
   type        = string
-  default     = null
-}
-
-variable "connection_draining_timeout_sec" {
-  description = "Time for which instance will be drained (not accept new connections, but still work to finish started)."
-  type        = number
-  default     = null
-}
-
-variable "enable_cdn" {
-  description = "Enable Cloud CDN for this BackendService."
-  type        = bool
-  default     = false
-}
-
-variable "session_affinity" {
-  description = "Type of session affinity to use. Possible values are: NONE, CLIENT_IP, CLIENT_IP_PORT_PROTO, CLIENT_IP_PROTO, GENERATED_COOKIE, HEADER_FIELD, HTTP_COOKIE, STRONG_COOKIE_AFFINITY."
-  type        = string
-  default     = null
-}
-
-variable "affinity_cookie_ttl_sec" {
-  description = "Lifetime of cookies in seconds if session_affinity is GENERATED_COOKIE."
-  type        = number
-  default     = null
-}
-
-variable "locality_lb_policy" {
-  description = "The load balancing algorithm used within the scope of the locality."
-  type        = string
-  default     = null
-}
-
-variable "security_policy" {
-  description = "The resource URL for the security policy to associate with the backend service"
-  type        = string
-  default     = null
-}
-
-variable "timeout_sec" {
-  description = "This has different meaning for different type of load balancing. Please refer https://cloud.google.com/load-balancing/docs/backend-service#timeout-setting"
-  type        = number
   default     = null
 }
 
@@ -140,42 +138,44 @@ variable "target_service_accounts" {
   default     = []
 }
 
-variable "serverless_neg_backends" {
-  description = "The list of serverless backend which serves the traffic."
-  type = list(object({
-    region          = string
-    type            = string // cloud-run, cloud-function, and app-engine
-    service_name    = string
-    service_version = optional(string)
-    capacity_scaler = optional(number, 1.0)
-  }))
-  default = []
+variable "connection_draining_timeout_sec" {
+  description = "Time for which instance will be drained (not accept new connections, but still work to finish started)."
+  type        = number
+  default     = null
 }
 
-variable "groups" {
-  description = "The list of backend instance group which serves the traffic."
-  type = list(object({
-    group       = string
-    description = optional(string)
-
-    balancing_mode               = optional(string)
-    capacity_scaler              = optional(number)
-    max_connections              = optional(number)
-    max_connections_per_instance = optional(number)
-    max_connections_per_endpoint = optional(number)
-    max_rate                     = optional(number)
-    max_rate_per_instance        = optional(number)
-    max_rate_per_endpoint        = optional(number)
-    max_utilization              = optional(number)
-  }))
-  default = []
+variable "enable_cdn" {
+  description = "Enable Cloud CDN for this BackendService."
+  type        = bool
+  default     = false
 }
 
-variable "host_path_mappings" {
-  description = "The list of host/path for which traffic could be sent to the backend service"
-  type = list(object({
-    host = string
-    path = string
-  }))
-  default = [{ host : "*", path : "/*" }]
+variable "session_affinity" {
+  description = "Type of session affinity to use. Possible values are: NONE, CLIENT_IP, CLIENT_IP_PORT_PROTO, CLIENT_IP_PROTO, GENERATED_COOKIE, HEADER_FIELD, HTTP_COOKIE, STRONG_COOKIE_AFFINITY."
+  type        = string
+  default     = null
+}
+
+variable "affinity_cookie_ttl_sec" {
+  description = "Lifetime of cookies in seconds if session_affinity is GENERATED_COOKIE."
+  type        = number
+  default     = null
+}
+
+variable "locality_lb_policy" {
+  description = "The load balancing algorithm used within the scope of the locality."
+  type        = string
+  default     = null
+}
+
+variable "security_policy" {
+  description = "The resource URL for the security policy to associate with the backend service"
+  type        = string
+  default     = null
+}
+
+variable "timeout_sec" {
+  description = "This has different meaning for different type of load balancing. Please refer https://cloud.google.com/load-balancing/docs/backend-service#timeout-setting"
+  type        = number
+  default     = null
 }

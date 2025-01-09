@@ -1,0 +1,186 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: BlueprintMetadata
+metadata:
+  name: terraform-google-regional-lb-http-frontend
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  info:
+    title: HTTP Regional Load balancer frontend module
+    source:
+      repo: https://github.com/googlestaging/terraform-google-regional-lb-http.git
+      sourceType: git
+      dir: /modules/frontend
+    version: 0.0.1
+    actuationTool:
+      flavor: Terraform
+      version: ">= 1.3"
+    description: {}
+  content:
+    examples:
+      - name: cloud-run
+        location: examples/cloud-run
+  interfaces:
+    variables:
+      - name: project_id
+        description: The project to deploy load balancer frontend resources..
+        varType: string
+        required: true
+      - name: region
+        description: The region where the load balancer will be created
+        varType: string
+        required: true
+      - name: name
+        description: Name for the forwarding rule and prefix for supporting resources
+        varType: string
+        required: true
+      - name: network
+        description: VPC network for the forwarding rule. It should not be default
+        varType: string
+        required: true
+      - name: proxy_only_subnet_ip
+        description: ip_cidr_range for creating proxy_only subnetwork in the provided VPC network.
+        varType: string
+        defaultValue: 10.129.0.0/23
+      - name: load_balancing_scheme
+        description: Load balancing scheme type (EXTERNAL for classic external load balancer, EXTERNAL_MANAGED for Envoy-based load balancer, and INTERNAL_SELF_MANAGED for traffic director)
+        varType: string
+        defaultValue: EXTERNAL_MANAGED
+      - name: create_url_map
+        description: Set to `false` if url_map_resource_uri variable is provided.
+        varType: bool
+        defaultValue: true
+      - name: url_map_input
+        description: List of host, path and backend service for creating url_map when create_url_map is set to true.
+        varType: |-
+          list(object({
+              host            = string
+              path            = string
+              backend_service = string
+            }))
+        defaultValue: []
+        connections:
+          - source:
+              source: github.com/GoogleCloudPlatform/terraform-google-regional-lb-http//modules/backend
+              version: ">= 0.0.1"
+            spec:
+              outputExpr: backend_service_info
+      - name: url_map_resource_uri
+        description: The url_map resource to use. This is the resource uri of the url map created out of band.
+        varType: string
+      - name: create_address
+        description: Create a new global IPv4 address
+        varType: bool
+        defaultValue: true
+      - name: address
+        description: Existing IPv4 address to use (the actual IP address value)
+        varType: string
+      - name: labels
+        description: The labels to attach to resources created by this module
+        varType: map(string)
+        defaultValue: {}
+      - name: ssl
+        description: "Set to `true` to enable SSL support. If `true` then at least one of these are required: 1) `ssl_certificates` OR 2) `create_ssl_certificate` set to `true` and `private_key/certificate` OR  3) `managed_ssl_certificate_domains`, OR 4) `certificate_map`"
+        varType: bool
+        defaultValue: false
+      - name: create_ssl_certificate
+        description: If `true`, Create certificate using `private_key/certificate`
+        varType: bool
+        defaultValue: false
+      - name: private_key
+        description: Content of the private SSL key. Requires `ssl` to be set to `true` and `create_ssl_certificate` set to `true`
+        varType: string
+      - name: certificate
+        description: Content of the SSL certificate. Requires `ssl` to be set to `true` and `create_ssl_certificate` set to `true`
+        varType: string
+      - name: ssl_certificates
+        description: SSL cert self_link list. Requires `ssl` to be set to `true`
+        varType: list(string)
+        defaultValue: []
+      - name: managed_ssl_certificate_domains
+        description: Create Google-managed SSL certificates for specified domains. Requires `ssl` to be set to `true`
+        varType: list(string)
+        defaultValue: []
+      - name: random_certificate_suffix
+        description: Bool to enable/disable random certificate name generation. Set and keep this to true if you need to change the SSL cert.
+        varType: bool
+        defaultValue: false
+      - name: http_port
+        description: The port for the HTTP load balancer
+        varType: number
+        defaultValue: 80
+      - name: https_port
+        description: The port for the HTTPS load balancer
+        varType: number
+        defaultValue: 443
+      - name: https_redirect
+        description: Set to `true` to enable https redirect on the lb.
+        varType: bool
+        defaultValue: false
+      - name: http_forward
+        description: Set to `false` to disable HTTP port 80 forward
+        varType: bool
+        defaultValue: true
+      - name: ssl_policy
+        description: Selfink to SSL Policy
+        varType: string
+      - name: server_tls_policy
+        description: The resource URL for the server TLS policy to associate with the https proxy service
+        varType: string
+      - name: http_keep_alive_timeout_sec
+        description: Specifies how long to keep a connection open, after completing a response, while there is no matching traffic (in seconds).
+        varType: number
+    outputs:
+      - name: external_ip
+        description: The external IPv4 assigned to the fowarding rule.
+        type: string
+      - name: http_proxy
+        description: The HTTP proxy used by this module.
+        type: string
+      - name: https_proxy
+        description: The HTTPS proxy used by this module.
+        type: string
+      - name: ssl_certificate_created
+        description: The SSL certificate create from key/pem
+        type: string
+      - name: url_map
+        description: The URL map used by this load balancer frontend.
+        type: string
+  requirements:
+    roles:
+      - level: Project
+        roles:
+          - roles/compute.xpnAdmin
+      - level: Project
+        roles:
+          - roles/owner
+          - roles/storage.admin
+    services:
+      - cloudresourcemanager.googleapis.com
+      - storage-api.googleapis.com
+      - serviceusage.googleapis.com
+      - compute.googleapis.com
+      - run.googleapis.com
+      - iam.googleapis.com
+      - certificatemanager.googleapis.com
+    providerVersions:
+      - source: hashicorp/google
+        version: ">= 6.0, < 7"
+      - source: hashicorp/google-beta
+        version: ">= 6.0, < 7"
+      - source: hashicorp/random
+        version: ">= 2.1"

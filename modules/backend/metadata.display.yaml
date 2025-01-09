@@ -15,42 +15,25 @@
 apiVersion: blueprints.cloud.google.com/v1alpha1
 kind: BlueprintMetadata
 metadata:
-  name: terraform-google-regional-lb-http-display
+  name: terraform-google-regional-lb-http-backend-display
   annotations:
     config.kubernetes.io/local-config: "true"
 spec:
   info:
-    title: Regional HTTP Load Balancer Terraform Module
+    title: HTTP Regional Load balancer backend module
     source:
       repo: https://github.com/googlestaging/terraform-google-regional-lb-http.git
       sourceType: git
+      dir: /modules/backend
   ui:
     input:
       variables:
-        address:
-          name: address
-          title: Address
         affinity_cookie_ttl_sec:
           name: affinity_cookie_ttl_sec
           title: Affinity Cookie Ttl Sec
-        backend_service_name:
-          name: backend_service_name
-          title: Backend Service Name
-        certificate:
-          name: certificate
-          title: Certificate
         connection_draining_timeout_sec:
           name: connection_draining_timeout_sec
           title: Connection Draining Timeout Sec
-        create_address:
-          name: create_address
-          title: Create Address
-        create_ssl_certificate:
-          name: create_ssl_certificate
-          title: Create Ssl Certificate
-        create_url_map:
-          name: create_url_map
-          title: Create Url Map
         description:
           name: description
           title: Description
@@ -63,90 +46,46 @@ spec:
         firewall_projects:
           name: firewall_projects
           title: Firewall Projects
-        forwarding_rule_name:
-          name: forwarding_rule_name
-          title: Forwarding Rule Name
         groups:
           name: groups
           title: Groups
         health_check:
           name: health_check
           title: Health Check
-        http_forward:
-          name: http_forward
-          title: Http Forward
-        http_keep_alive_timeout_sec:
-          name: http_keep_alive_timeout_sec
-          title: Http Keep Alive Timeout Sec
-        http_port:
-          name: http_port
-          title: Http Port
-        https_port:
-          name: https_port
-          title: Https Port
-        https_redirect:
-          name: https_redirect
-          title: Https Redirect
-        labels:
-          name: labels
-          title: Labels
+        host_path_mappings:
+          name: host_path_mappings
+          title: Host Path Mappings
+          level: 1
         load_balancing_scheme:
           name: load_balancing_scheme
           title: Load Balancing Scheme
         locality_lb_policy:
           name: locality_lb_policy
           title: Locality Lb Policy
-        managed_ssl_certificate_domains:
-          name: managed_ssl_certificate_domains
-          title: Managed Ssl Certificate Domains
         name:
           name: name
           title: Name
-        network:
-          name: network
-          title: Network
         port_name:
           name: port_name
           title: Port Name
-        private_key:
-          name: private_key
-          title: Private Key
         project_id:
           name: project_id
           title: Project Id
         protocol:
           name: protocol
           title: Protocol
-        proxy_name:
-          name: proxy_name
-          title: Proxy Name
-        random_certificate_suffix:
-          name: random_certificate_suffix
-          title: Random Certificate Suffix
         region:
           name: region
           title: Region
         security_policy:
           name: security_policy
           title: Security Policy
-        server_tls_policy:
-          name: server_tls_policy
-          title: Server Tls Policy
         serverless_neg_backends:
           name: serverless_neg_backends
           title: Serverless Neg Backends
         session_affinity:
           name: session_affinity
           title: Session Affinity
-        ssl:
-          name: ssl
-          title: Ssl
-        ssl_certificates:
-          name: ssl_certificates
-          title: Ssl Certificates
-        ssl_policy:
-          name: ssl_policy
-          title: Ssl Policy
         target_service_accounts:
           name: target_service_accounts
           title: Target Service Accounts
@@ -156,15 +95,3 @@ spec:
         timeout_sec:
           name: timeout_sec
           title: Timeout Sec
-        url_map:
-          name: url_map
-          title: Url Map
-        url_map_input:
-          name: url_map_input
-          title: Url Map Input
-        url_map_name:
-          name: url_map_name
-          title: Url Map Name
-        url_map_resource_uri:
-          name: url_map_resource_uri
-          title: Url Map Resource Uri

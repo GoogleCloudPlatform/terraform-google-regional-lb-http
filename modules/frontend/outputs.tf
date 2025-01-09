@@ -31,8 +31,8 @@ output "https_proxy" {
 }
 
 output "url_map" {
-  description = "The default URL map used by this module."
-  value       = google_compute_region_url_map.default[*].self_link
+  description = "The URL map used by this load balancer frontend."
+  value       = local.url_map
 }
 
 output "ssl_certificate_created" {
