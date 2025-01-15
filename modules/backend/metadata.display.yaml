@@ -52,6 +52,14 @@ spec:
         health_check:
           name: health_check
           title: Health Check
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value:
+                - check_interval_sec: 10
+                  timeout_sec: 10
+                  healthy_threshold: 2
+                  unhealthy_threshold: 2
+                  logging: true
         host_path_mappings:
           name: host_path_mappings
           title: Host Path Mappings

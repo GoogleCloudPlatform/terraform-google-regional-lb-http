@@ -75,7 +75,7 @@ spec:
         defaultValue: []
         connections:
           - source:
-              source: github.com/q2w/terraform-google-regional-lb-http//modules/backend
+              source: github.com/GoogleCloudPlatform/terraform-google-regional-lb-http//modules/backend
               version: ">= 0.0.1"
             spec:
               outputExpr: backend_service_info
