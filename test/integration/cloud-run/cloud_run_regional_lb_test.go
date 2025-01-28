@@ -17,45 +17,12 @@ package cloud_run_regional_lb
 import (
 	"testing"
 
-	"io"
 	"net/http"
-	"time"
 
 	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/tft"
+	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/utils"
 	"github.com/stretchr/testify/assert"
 )
-
-func AssertResponseStatus(t *testing.T, assert *assert.Assertions, url string, statusCode int) {
-	var resStatusCode int
-	resStatusCode, _, _ = httpGetRequest(t, url, 60*time.Second)
-	assert.Equal(statusCode, resStatusCode)
-}
-
-func httpGetRequest(t *testing.T, url string, timeout time.Duration) (statusCode int, body string, err error) {
-	t.Helper()
-
-	// Create an HTTP client with a timeout
-	client := &http.Client{
-		Timeout: timeout,
-	}
-
-	// Perform the GET request
-	res, err := client.Get(url)
-	if err != nil {
-		t.Fatalf("http get unexpected err: %v", err)
-		return 0, "", err // Return here to satisfy the function signature
-	}
-	defer res.Body.Close()
-
-	// Read the response body
-	buffer, err := io.ReadAll(res.Body)
-	if err != nil {
-		t.Fatalf("reading response body unexpected err: %v", err)
-		return 0, "", err // Return here to satisfy the function signature
-	}
-
-	return res.StatusCode, string(buffer), nil
-}
 
 func TestCloudRunRegionalLb(t *testing.T) {
 	bpt := tft.NewTFBlueprintTest(t)
@@ -64,7 +31,10 @@ func TestCloudRunRegionalLb(t *testing.T) {
 		bpt.DefaultVerify(assert)
 
 		externalIp := bpt.GetStringOutput("external_ip")
-		AssertResponseStatus(t, assert, "http://"+externalIp, 200)
+
+		httpRequest, _ := http.NewRequest("GET", "http://"+externalIp, nil)
+		assertHttp := utils.NewAssertHTTP()
+		assertHttp.AssertResponse(t, httpRequest, http.StatusOK)
 	})
 
 	bpt.Test()
