@@ -44,7 +44,7 @@ resource "google_compute_region_backend_service" "default" {
       group       = backend.value["group"]
 
       balancing_mode               = backend.value["balancing_mode"]
-      capacity_scaler              = backend.value["capacity_scaler"]
+      capacity_scaler              = var.load_balancing_scheme == "EXTERNAL_MANAGED" ? backend.value["capacity_scaler"] : null
       max_connections              = backend.value["max_connections"]
       max_connections_per_instance = backend.value["max_connections_per_instance"]
       max_connections_per_endpoint = backend.value["max_connections_per_endpoint"]
@@ -59,7 +59,7 @@ resource "google_compute_region_backend_service" "default" {
     for_each = toset(var.serverless_neg_backends)
     content {
       group           = google_compute_region_network_endpoint_group.serverless_negs["neg-${var.name}-${backend.value.region}"].id
-      capacity_scaler = backend.value.capacity_scaler
+      capacity_scaler = var.load_balancing_scheme == "EXTERNAL_MANAGED" ? backend.value.capacity_scaler : null
     }
   }
 }

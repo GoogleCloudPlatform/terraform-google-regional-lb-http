@@ -73,6 +73,9 @@ spec:
         load_balancing_scheme:
           name: load_balancing_scheme
           title: Load Balancing Scheme
+          enumValueLabels:
+            - label: EXTERNAL_MANAGED
+              value: EXTERNAL_MANAGED
         managed_ssl_certificate_domains:
           name: managed_ssl_certificate_domains
           title: Managed Ssl Certificate Domains
