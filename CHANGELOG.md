@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.1.3...v0.2.0) (2025-01-28)
+
+
+### Features
+
+* add support for ipv6 and test/example for GCE MIG ([#16](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/16)) ([2701087](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/270108739656033430032fc032b153eeeb3fbcba))
+
 ## [0.1.3](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.1.2...v0.1.3) (2025-01-16)
 
 
