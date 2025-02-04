@@ -28,6 +28,16 @@ resource "google_compute_subnetwork" "default" {
   project       = var.project_id
 }
 
+resource "google_compute_subnetwork" "proxy_only" {
+  name          = "proxy-only-subnetwork"
+  ip_cidr_range = "10.129.0.0/23"
+  network       = google_compute_network.default.id
+  purpose       = "REGIONAL_MANAGED_PROXY"
+  region        = var.region
+  project       = var.project_id
+  role          = "ACTIVE"
+}
+
 module "lb-http-backend" {
   source  = "GoogleCloudPlatform/regional-lb-http/google//modules/backend"
   version = "~> 0.0.1"
@@ -42,14 +52,14 @@ module "lb-http-backend" {
 }
 
 module "lb-http-frontend" {
-  source                   = "GoogleCloudPlatform/regional-lb-http/google//modules/frontend"
-  version                  = "~> 0.0.1"
-  project_id               = var.project_id
-  region                   = var.region
-  name                     = "frontend-lb"
-  url_map_input            = module.lb-http-backend.backend_service_info
-  network                  = google_compute_network.default.name
-  create_proxy_only_subnet = true
+  source        = "GoogleCloudPlatform/regional-lb-http/google//modules/frontend"
+  version       = "~> 0.0.1"
+  project_id    = var.project_id
+  region        = var.region
+  name          = "frontend-lb"
+  url_map_input = module.lb-http-backend.backend_service_info
+  network       = google_compute_network.default.name
+  depends_on    = [google_compute_subnetwork.proxy_only]
 }
 
 resource "google_cloud_run_service" "default" {
