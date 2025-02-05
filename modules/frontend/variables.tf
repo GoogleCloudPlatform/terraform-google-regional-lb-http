@@ -30,7 +30,7 @@ variable "name" {
 }
 
 variable "network" {
-  description = "VPC network for the forwarding rule. It should not be default. The VPC network should also have only one REGIONAL_MANAGED_PROXY subnetwork in the same region as of this regional load balancer. Please go to the subnets tab of your VPC network and check if a REGIONAL_MANAGED_PROXY subnet exists under `Reserved proxy-only subnets for load balancing` section. If the REGIONAL_MANAGED_PROXY doesn't exists, set create_proxy_only_subnet parameter to provision it as part of this component deployment."
+  description = "VPC network for the forwarding rule. It should not be default. The VPC network should have only one REGIONAL_MANAGED_PROXY subnetwork in the same region as of this regional load balancer. Please go to the subnets tab of your VPC network and check if a REGIONAL_MANAGED_PROXY subnet exists under `Reserved proxy-only subnets for load balancing` section. If the REGIONAL_MANAGED_PROXY doesn't exists, set create_proxy_only_subnet parameter to provision it as part of this component deployment."
   type        = string
 }
 
