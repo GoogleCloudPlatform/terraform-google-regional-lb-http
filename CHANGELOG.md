@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.3.0...v0.3.1) (2025-02-05)
+
+
+### Bug Fixes
+
+* fix typo in the description ([#24](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/24)) ([7c9fbfb](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/7c9fbfb1b818ef08c46cf75f6334a9a4328f7dda))
+
 ## [0.3.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.2.0...v0.3.0) (2025-02-05)
 
 
