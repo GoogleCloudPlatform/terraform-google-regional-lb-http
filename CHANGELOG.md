@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.2.0...v0.3.0) (2025-02-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* add flag to create REGIONAL_MANAGED_PROXY subnet within modules… ([#21](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/21))
+
+### Features
+
+* add flag to create REGIONAL_MANAGED_PROXY subnet within modules… ([#21](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/21)) ([60e4d9e](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/60e4d9edc357a8b55894b0fdb194dc04b74df45a))
+
 ## [0.2.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.1.3...v0.2.0) (2025-01-28)
 
 
