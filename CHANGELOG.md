@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.2](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.3.1...v0.3.2) (2025-02-17)
+
+
+### Bug Fixes
+
+* add connection metadata for GCE MIG ([#26](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/26)) ([a23367a](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/a23367a21190a22e51ae6bbec7a0f1de74aaa30e))
+
 ## [0.3.1](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.3.0...v0.3.1) (2025-02-05)
 
 
