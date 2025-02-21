@@ -34,6 +34,12 @@ variable "network" {
   type        = string
 }
 
+variable "subnetwork" {
+  description = "Subnetwork that the load balanced IP should belong to, used in internal load balancing"
+  type        = string
+  default     = null
+}
+
 variable "create_proxy_only_subnet" {
   description = "Create a REGIONAL_MANAGED_PROXY subnetwork in the provided VPC network."
   type        = bool

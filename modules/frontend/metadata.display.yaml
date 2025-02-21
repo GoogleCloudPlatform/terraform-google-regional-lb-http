@@ -80,6 +80,8 @@ spec:
           enumValueLabels:
             - label: EXTERNAL_MANAGED
               value: EXTERNAL_MANAGED
+            - label: INTERNAL_MANAGED
+              value: INTERNAL_MANAGED
         managed_ssl_certificate_domains:
           name: managed_ssl_certificate_domains
           title: Managed Ssl Certificate Domains
@@ -119,6 +121,10 @@ spec:
         ssl_policy:
           name: ssl_policy
           title: Ssl Policy
+        subnetwork:
+          name: subnetwork
+          title: Subnetwork
+          level: 1
         url_map_input:
           name: url_map_input
           title: Url Map Input
@@ -128,4 +134,8 @@ spec:
     runtime:
       outputs:
         external_ip:
+          visibility: VISIBILITY_ROOT
+        ip_address_http:
+          visibility: VISIBILITY_ROOT
+        ip_address_https:
           visibility: VISIBILITY_ROOT

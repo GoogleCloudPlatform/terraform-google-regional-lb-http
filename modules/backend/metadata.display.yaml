@@ -46,6 +46,9 @@ spec:
         firewall_projects:
           name: firewall_projects
           title: Firewall Projects
+        firewall_source_ranges:
+          name: firewall_source_ranges
+          title: Firewall Source Ranges
         groups:
           name: groups
           title: Groups
@@ -62,6 +65,8 @@ spec:
           enumValueLabels:
             - label: EXTERNAL_MANAGED
               value: EXTERNAL_MANAGED
+            - label: INTERNAL_MANAGED
+              value: INTERNAL_MANAGED
         locality_lb_policy:
           name: locality_lb_policy
           title: Locality Lb Policy

@@ -138,6 +138,12 @@ variable "target_service_accounts" {
   default     = []
 }
 
+variable "firewall_source_ranges" {
+  description = "Source ranges for regional Application Load Balancer's proxies. This should be set to ip_cidr_range of your REGIONAL_MANAGED_PROXY subnet."
+  type        = list(string)
+  default     = ["10.129.0.0/23"]
+}
+
 variable "connection_draining_timeout_sec" {
   description = "Time for which instance will be drained (not accept new connections, but still work to finish started)."
   type        = number

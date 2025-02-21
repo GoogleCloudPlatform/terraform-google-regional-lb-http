@@ -39,7 +39,7 @@ steps:
   waitFor:
     - apply lb-http-separate-frontend-and-backend
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  args: ['/bin/bash', '-c', 'sleep 720 && cft test run TestCloudRunRegionalLb --stage verify --verbose']
+  args: ['/bin/bash', '-c', 'sleep 360 && cft test run TestCloudRunRegionalLb --stage verify --verbose']
 - id: teardown lb-http-separate-frontend-and-backend
   waitFor:
     - verify lb-http-separate-frontend-and-backend
@@ -55,12 +55,28 @@ steps:
   waitFor:
     - apply lb-http-separate-frontend-and-backend-mig
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  args: ['/bin/bash', '-c', 'sleep 720 && cft test run TestGceMigRegionalLb --stage verify --verbose']
+  args: ['/bin/bash', '-c', 'sleep 360 && cft test run TestGceMigRegionalLb --stage verify --verbose']
 - id: teardown lb-http-separate-frontend-and-backend-mig
   waitFor:
     - verify lb-http-separate-frontend-and-backend-mig
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
   args: ['/bin/bash', '-c', 'cft test run TestGceMigRegionalLb --stage teardown --verbose']
+# Internal http load balancer with cloud-run
+- id: apply internal-lb-http
+  waitFor:
+    - init-all
+  name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  args: ['/bin/bash', '-c', 'cft test run TestInternalLbCloudRun --stage apply --verbose']
+- id: verify internal-lb-http
+  waitFor:
+    - apply internal-lb-http
+  name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  args: ['/bin/bash', '-c', 'sleep 360 && cft test run TestInternalLbCloudRun --stage verify --verbose']
+- id: teardown internal-lb-http
+  waitFor:
+    - verify internal-lb-http
+  name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  args: ['/bin/bash', '-c', 'cft test run TestInternalLbCloudRun --stage teardown --verbose']
 tags:
 - 'ci'
 - 'integration'

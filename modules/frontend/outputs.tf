@@ -20,6 +20,16 @@ output "external_ip" {
   value       = local.address
 }
 
+output "ip_address_http" {
+  description = "The internal/external IP address assigned to the HTTP forwarding rule."
+  value       = try(google_compute_forwarding_rule.default[0].ip_address, "")
+}
+
+output "ip_address_https" {
+  description = "The internal/external IP address assigned to the HTTPS forwarding rule."
+  value       = try(google_compute_forwarding_rule.https[0].ip_address, "")
+}
+
 output "http_proxy" {
   description = "The HTTP proxy used by this module."
   value       = google_compute_region_target_http_proxy.default[*].self_link
@@ -42,13 +52,13 @@ output "ssl_certificate_created" {
 
 output "apphub_service_uri" {
   value = concat(
-    [
+    local.create_http_forward ? [
       {
-        service_uri = "//compute.googleapis.com/${google_compute_forwarding_rule.default.id}"
-        service_id  = substr("${google_compute_forwarding_rule.default.name}-${md5("${var.region}-${var.project_id}")}", 0, 63)
+        service_uri = "//compute.googleapis.com/${google_compute_forwarding_rule.default[0].id}"
+        service_id  = substr("${google_compute_forwarding_rule.default[0].name}-${md5("${var.region}-${var.project_id}")}", 0, 63)
         location    = var.region
       }
-    ],
+    ] : [],
     var.ssl ? [
       {
         service_uri = "//compute.googleapis.com/${google_compute_forwarding_rule.https[0].id}"

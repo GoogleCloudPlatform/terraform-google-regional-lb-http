@@ -16,7 +16,7 @@
 
 
 locals {
-  is_internal = var.load_balancing_scheme == "INTERNAL_SELF_MANAGED"
+  is_internal = var.load_balancing_scheme == "INTERNAL_SELF_MANAGED" || var.load_balancing_scheme == "INTERNAL_MANAGED"
   address     = var.create_address ? join("", google_compute_address.default[*].address) : var.address
 
   url_map             = var.create_url_map ? join("", google_compute_region_url_map.default[*].self_link) : var.url_map_resource_uri
@@ -55,6 +55,7 @@ resource "google_compute_subnetwork" "proxy_only" {
 
 resource "google_compute_forwarding_rule" "default" {
   provider              = google-beta
+  count                 = local.create_http_forward ? 1 : 0
   project               = var.project_id
   region                = var.region
   name                  = "${var.name}-forwarding-rule-http"
@@ -64,6 +65,7 @@ resource "google_compute_forwarding_rule" "default" {
   load_balancing_scheme = var.load_balancing_scheme
   labels                = var.labels
   network               = var.network
+  subnetwork            = var.subnetwork
   depends_on            = [google_compute_subnetwork.proxy_only]
 }
 
@@ -78,6 +80,7 @@ resource "google_compute_forwarding_rule" "https" {
   ip_address            = local.address
   labels                = var.labels
   network               = var.network
+  subnetwork            = var.subnetwork
   depends_on            = [google_compute_subnetwork.proxy_only]
 }
 
@@ -103,10 +106,11 @@ resource "google_compute_forwarding_rule" "http_ipv6" {
   name                  = "${var.name}-forwarding-rule-ipv6-http"
   target                = google_compute_region_target_http_proxy.default[0].self_link
   ip_address            = local.ipv6_address
-  port_range            = "80"
+  port_range            = var.http_port
   labels                = var.labels
   load_balancing_scheme = var.load_balancing_scheme
   network               = var.network
+  subnetwork            = var.subnetwork
   depends_on            = [google_compute_subnetwork.proxy_only]
 }
 
@@ -118,10 +122,11 @@ resource "google_compute_forwarding_rule" "https_ipv6" {
   name                  = "${var.name}-forwarding-rule-ipv6-https"
   target                = google_compute_region_target_https_proxy.default[0].self_link
   ip_address            = local.ipv6_address
-  port_range            = "443"
+  port_range            = var.https_port
   labels                = var.labels
   load_balancing_scheme = var.load_balancing_scheme
   network               = var.network
+  subnetwork            = var.subnetwork
   depends_on            = [google_compute_subnetwork.proxy_only]
 }
 

@@ -33,6 +33,7 @@ This module creates `HTTP(S) forwarding rule` and its dependencies. This modules
 | ssl | Set to `true` to enable SSL support. If `true` then at least one of these are required: 1) `ssl_certificates` OR 2) `create_ssl_certificate` set to `true` and `private_key/certificate` OR  3) `managed_ssl_certificate_domains`, OR 4) `certificate_map` | `bool` | `false` | no |
 | ssl\_certificates | SSL cert self\_link list. Requires `ssl` to be set to `true` | `list(string)` | `[]` | no |
 | ssl\_policy | Selfink to SSL Policy | `string` | `null` | no |
+| subnetwork | Subnetwork that the load balanced IP should belong to, used in internal load balancing | `string` | `null` | no |
 | url\_map\_input | List of host, path and backend service for creating url\_map when create\_url\_map is set to true. | <pre>list(object({<br>    host            = string<br>    path            = string<br>    backend_service = string<br>  }))</pre> | `[]` | no |
 | url\_map\_resource\_uri | The url\_map resource to use. This is the resource uri of the url map created out of band. | `string` | `null` | no |
 
@@ -44,6 +45,8 @@ This module creates `HTTP(S) forwarding rule` and its dependencies. This modules
 | external\_ip | The external IPv4 assigned to the fowarding rule. |
 | http\_proxy | The HTTP proxy used by this module. |
 | https\_proxy | The HTTPS proxy used by this module. |
+| ip\_address\_http | The internal/external IP address assigned to the HTTP forwarding rule. |
+| ip\_address\_https | The internal/external IP address assigned to the HTTPS forwarding rule. |
 | ssl\_certificate\_created | The SSL certificate create from key/pem |
 | url\_map | The URL map used by this load balancer frontend. |
 
