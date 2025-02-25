@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.3.2...v0.4.0) (2025-02-25)
+
+
+### Features
+
+* add support for internal load balancer ([#28](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/28)) ([f221a76](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/f221a76b267928da2e5e3bb945817c6d0d41f3a5))
+
 ## [0.3.2](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.3.1...v0.3.2) (2025-02-17)
 
 
