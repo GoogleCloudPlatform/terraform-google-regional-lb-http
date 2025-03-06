@@ -20,7 +20,7 @@ This module creates `HTTP(S) forwarding rule` and its dependencies. This modules
 | https\_redirect | Set to `true` to enable https redirect on the lb. | `bool` | `false` | no |
 | ipv6\_address | An existing IPv6 address to use (the actual IP address value) | `string` | `null` | no |
 | labels | The labels to attach to resources created by this module | `map(string)` | `{}` | no |
-| load\_balancing\_scheme | Load balancing scheme type (EXTERNAL for classic external load balancer, EXTERNAL\_MANAGED for Envoy-based load balancer, and INTERNAL\_SELF\_MANAGED for traffic director) | `string` | `"EXTERNAL_MANAGED"` | no |
+| load\_balancing\_scheme | Load balancing scheme type (EXTERNAL for classic external load balancer, EXTERNAL\_MANAGED for Envoy-based load balancer, and INTERNAL\_MANAGED for internal load balancer) | `string` | `"EXTERNAL_MANAGED"` | no |
 | managed\_ssl\_certificate\_domains | Create Google-managed SSL certificates for specified domains. Requires `ssl` to be set to `true` | `list(string)` | `[]` | no |
 | name | Name for the forwarding rule and prefix for supporting resources | `string` | n/a | yes |
 | network | VPC network for the forwarding rule. It should not be default. The VPC network should have only one REGIONAL\_MANAGED\_PROXY subnetwork in the same region as of this regional load balancer. Please go to the subnets tab of your VPC network and check if a REGIONAL\_MANAGED\_PROXY subnet exists under `Reserved proxy-only subnets for load balancing` section. If the REGIONAL\_MANAGED\_PROXY doesn't exists, set create\_proxy\_only\_subnet parameter to provision it as part of this component deployment. | `string` | n/a | yes |

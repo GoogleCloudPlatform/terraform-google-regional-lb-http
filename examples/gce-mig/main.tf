@@ -72,12 +72,8 @@ module "instance_template" {
   network              = google_compute_network.default.self_link
   subnetwork           = google_compute_subnetwork.default.self_link
   access_config        = [{ network_tier : "PREMIUM" }]
-  service_account = {
-    email  = ""
-    scopes = ["cloud-platform"]
-  }
-  name_prefix    = "instance-template"
-  startup_script = <<EOF
+  name_prefix          = "instance-template"
+  startup_script       = <<EOF
     #! /bin/bash
     sudo apt-get update
     sudo apt-get install apache2 -y
