@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.4.0...v0.4.1) (2025-03-07)
+
+
+### Bug Fixes
+
+* update description for load_balancing_scheme ([#31](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/31)) ([7b27c82](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/7b27c824beb1cd15f6de5f50c5daab46825f02f7))
+
 ## [0.4.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.3.2...v0.4.0) (2025-02-25)
 
 
