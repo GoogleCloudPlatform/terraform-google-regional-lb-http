@@ -91,13 +91,13 @@ resource "google_vpc_access_connector" "default" {
 }
 
 module "frontend-service" {
-  source                        = "GoogleCloudPlatform/cloud-run/google//modules/v2"
-  version                       = "~> 0.16.3"
-  project_id                    = var.project_id
-  location                      = var.region
-  service_name                  = "fs-2002"
-  containers                    = [{ "env_vars" : { "TARGET_IP" : module.lb-http-frontend.ip_address_http }, "ports" = { "container_port" = 80, "name" = "http1" }, "container_name" = "", "container_image" = "gcr.io/design-center-container-repo/redirect-traffic:latest-2002" }]
-  members                       = ["allUsers"]
+  source       = "GoogleCloudPlatform/cloud-run/google//modules/v2"
+  version      = "~> 0.16.3"
+  project_id   = var.project_id
+  location     = var.region
+  service_name = "fs-2002"
+  containers   = [{ "env_vars" : { "TARGET_IP" : module.lb-http-frontend.ip_address_http }, "ports" = { "container_port" = 80, "name" = "http1" }, "container_name" = "", "container_image" = "gcr.io/design-center-container-repo/redirect-traffic:latest-2002" }]
+  members      = ["allUsers"]
   vpc_access = {
     connector = google_vpc_access_connector.default.id
     egress    = "ALL_TRAFFIC"
