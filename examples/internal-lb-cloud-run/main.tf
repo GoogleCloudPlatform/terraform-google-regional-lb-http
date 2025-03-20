@@ -40,7 +40,7 @@ resource "google_compute_subnetwork" "proxy_only" {
 
 module "backend-service" {
   source                        = "GoogleCloudPlatform/cloud-run/google//modules/v2"
-  version                       = "~> 0.16.3"
+  version                       = "~> 0.17.0"
   project_id                    = var.project_id
   location                      = var.region
   service_name                  = "bs-2002"
@@ -92,7 +92,7 @@ resource "google_vpc_access_connector" "default" {
 
 module "frontend-service" {
   source       = "GoogleCloudPlatform/cloud-run/google//modules/v2"
-  version      = "~> 0.16.3"
+  version      = "~> 0.17.0"
   project_id   = var.project_id
   location     = var.region
   service_name = "fs-2002"
