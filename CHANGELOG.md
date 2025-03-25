@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.4.1...v0.4.2) (2025-03-25)
+
+
+### Bug Fixes
+
+* added service specific iam roles ([#35](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/35)) ([db322b0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/db322b0c10173aee6f01e3d185118848fe90e692))
+
 ## [0.4.1](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.4.0...v0.4.1) (2025-03-07)
 
 
