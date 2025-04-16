@@ -42,6 +42,8 @@ spec:
         location: examples/gce-mig
       - name: internal-lb-cloud-run
         location: examples/internal-lb-cloud-run
+      - name: internal-lb-gce-mig
+        location: examples/internal-lb-gce-mig
   interfaces:
     variables:
       - name: name

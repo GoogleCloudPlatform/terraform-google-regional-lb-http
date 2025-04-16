@@ -1,6 +1,6 @@
 # HTTP Regional Load Balancer Example - GCE MIG
 
-This example creates a global HTTP forwarding rule to forward traffic to GCE manager instance group. The `google_compute_region_backend_service` and its dependencies are created as part of `backend` module.
+This example creates a regional HTTP forwarding rule to forward traffic to GCE manager instance group. The `google_compute_region_backend_service` and its dependencies are created as part of `backend` module.
 The forwarding rules and its dependecies are created as part of `frontend` modules.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

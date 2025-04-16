@@ -44,7 +44,7 @@ resource "google_compute_region_backend_service" "default" {
       group       = backend.value["group"]
 
       balancing_mode               = backend.value["balancing_mode"]
-      capacity_scaler              = var.load_balancing_scheme == "EXTERNAL_MANAGED" ? backend.value["capacity_scaler"] : null
+      capacity_scaler              = var.load_balancing_scheme != "INTERNAL" ? backend.value["capacity_scaler"] : null
       max_connections              = backend.value["max_connections"]
       max_connections_per_instance = backend.value["max_connections_per_instance"]
       max_connections_per_endpoint = backend.value["max_connections_per_endpoint"]
@@ -58,8 +58,8 @@ resource "google_compute_region_backend_service" "default" {
   dynamic "backend" {
     for_each = toset(var.serverless_neg_backends)
     content {
-      group           = google_compute_region_network_endpoint_group.serverless_negs["neg-${var.name}-${backend.value.region}"].id
-      capacity_scaler = var.load_balancing_scheme == "EXTERNAL_MANAGED" ? backend.value.capacity_scaler : null
+      group           = google_compute_region_network_endpoint_group.serverless_negs["neg-${var.name}-${backend.value.service_name}-${backend.value.region}"].id
+      capacity_scaler = var.load_balancing_scheme != "INTERNAL" ? backend.value.capacity_scaler : null
     }
   }
 }
@@ -182,7 +182,7 @@ resource "google_compute_firewall" "allow_proxy" {
 
 resource "google_compute_region_network_endpoint_group" "serverless_negs" {
   for_each = { for serverless_neg_backend in var.serverless_neg_backends :
-  "neg-${var.name}-${serverless_neg_backend.region}" => serverless_neg_backend }
+  "neg-${var.name}-${serverless_neg_backend.service_name}-${serverless_neg_backend.region}" => serverless_neg_backend }
 
 
   provider              = google-beta
