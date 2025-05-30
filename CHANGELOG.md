@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.3](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.4.2...v0.4.3) (2025-04-21)
+
+
+### Bug Fixes
+
+* define capacity_scalar for the backend even when the load balancing scheme is INTERNAL_MANAGED ([#39](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/39)) ([595f91f](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/595f91fa5a98224f98bd97bbfc102ece7294871e))
+
 ## [0.4.2](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.4.1...v0.4.2) (2025-03-25)
 
 
