@@ -52,8 +52,7 @@ module "backend-service" {
 }
 
 module "lb-http-backend" {
-  source  = "GoogleCloudPlatform/regional-lb-http/google//modules/backend"
-  version = "~> 0.4.0"
+  source = "qz267/regional-lb-http/google//modules/backend"
 
   project_id            = var.project_id
   region                = var.region
@@ -65,8 +64,7 @@ module "lb-http-backend" {
 }
 
 module "lb-http-frontend" {
-  source  = "GoogleCloudPlatform/regional-lb-http/google//modules/frontend"
-  version = "~> 0.4.0"
+  source = "qz267/regional-lb-http/google//modules/frontend"
 
   project_id            = var.project_id
   region                = var.region
@@ -108,8 +106,7 @@ module "frontend-service" {
 }
 
 module "lb-http-backend-ext" {
-  source  = "GoogleCloudPlatform/regional-lb-http/google//modules/backend"
-  version = "~> 0.4.0"
+  source = "qz267/regional-lb-http/google//modules/backend"
 
   project_id = var.project_id
   region     = var.region
@@ -120,8 +117,7 @@ module "lb-http-backend-ext" {
 }
 
 module "lb-http-frontend-ext" {
-  source  = "GoogleCloudPlatform/regional-lb-http/google//modules/frontend"
-  version = "~> 0.4.0"
+  source = "qz267/regional-lb-http/google//modules/frontend"
 
   project_id    = var.project_id
   region        = var.region

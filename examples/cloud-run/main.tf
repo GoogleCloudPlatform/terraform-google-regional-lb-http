@@ -39,9 +39,7 @@ resource "google_compute_subnetwork" "proxy_only" {
 }
 
 module "lb-http-backend" {
-  source  = "GoogleCloudPlatform/regional-lb-http/google//modules/backend"
-  version = "~> 0.0.1"
-
+  source     = "qz267/regional-lb-http/google//modules/backend"
   project_id = var.project_id
   region     = var.region
   name       = "backend-lb"
@@ -52,8 +50,7 @@ module "lb-http-backend" {
 }
 
 module "lb-http-frontend" {
-  source        = "GoogleCloudPlatform/regional-lb-http/google//modules/frontend"
-  version       = "~> 0.0.1"
+  source        = "qz267/regional-lb-http/google//modules/frontend"
   project_id    = var.project_id
   region        = var.region
   name          = "frontend-lb"
