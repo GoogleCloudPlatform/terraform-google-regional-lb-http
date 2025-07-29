@@ -53,7 +53,7 @@ module "backend-service" {
 
 module "lb-http-backend" {
   source                = "GoogleCloudPlatform/regional-lb-http/google//modules/backend"
-  version               = "~> 0.0.1"
+  version               = "~> 0.4.0"
   project_id            = var.project_id
   region                = var.region
   name                  = "backend-lb-int"
