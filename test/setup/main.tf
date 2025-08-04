@@ -14,6 +14,41 @@
  * limitations under the License.
  */
 
+locals {
+  per_module_services = {
+    root = [
+      "cloudresourcemanager.googleapis.com",
+      "storage-api.googleapis.com",
+      "serviceusage.googleapis.com",
+      "compute.googleapis.com",
+      "run.googleapis.com",
+      "iam.googleapis.com",
+      "certificatemanager.googleapis.com",
+      "vpcaccess.googleapis.com",
+    ]
+    frontend = [
+      "cloudresourcemanager.googleapis.com",
+      "storage-api.googleapis.com",
+      "serviceusage.googleapis.com",
+      "compute.googleapis.com",
+      "run.googleapis.com",
+      "iam.googleapis.com",
+      "certificatemanager.googleapis.com",
+      "vpcaccess.googleapis.com",
+    ]
+    backend = [
+      "cloudresourcemanager.googleapis.com",
+      "storage-api.googleapis.com",
+      "serviceusage.googleapis.com",
+      "compute.googleapis.com",
+      "run.googleapis.com",
+      "iam.googleapis.com",
+      "certificatemanager.googleapis.com",
+      "vpcaccess.googleapis.com",
+    ]
+  }
+}
+
 module "project-ci-regional-lb-http" {
   source  = "terraform-google-modules/project-factory/google"
   version = "~> 18.0"
@@ -28,14 +63,5 @@ module "project-ci-regional-lb-http" {
   disable_services_on_destroy = false
   deletion_policy             = "DELETE"
 
-  activate_apis = [
-    "cloudresourcemanager.googleapis.com",
-    "storage-api.googleapis.com",
-    "serviceusage.googleapis.com",
-    "compute.googleapis.com",
-    "run.googleapis.com",
-    "iam.googleapis.com",
-    "certificatemanager.googleapis.com",
-    "vpcaccess.googleapis.com",
-  ]
+  activate_apis = tolist(toset(flatten(values(local.per_module_services))))
 }

@@ -29,9 +29,8 @@ resource "google_compute_subnetwork" "default" {
 }
 
 module "lb-http-backend" {
-  source  = "GoogleCloudPlatform/regional-lb-http/google//modules/backend"
-  version = "~> 0.0.1"
-
+  source     = "GoogleCloudPlatform/regional-lb-http/google//modules/backend"
+  version    = "~> 0.4.0"
   project_id = var.project_id
   region     = "us-central1"
   name       = "backend-lb-mig"
@@ -52,7 +51,7 @@ module "lb-http-backend" {
 
 module "lb-http-frontend" {
   source                   = "GoogleCloudPlatform/regional-lb-http/google//modules/frontend"
-  version                  = "~> 0.0.1"
+  version                  = "~> 0.4.0"
   project_id               = var.project_id
   region                   = "us-central1"
   name                     = "frontend-lb-mig"
