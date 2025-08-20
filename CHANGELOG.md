@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.5.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.4.3...v0.5.0) (2025-08-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* Update name for serverless negs and change in validation for name ([#50](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/50))
+
+### Bug Fixes
+
+* per module requirements configs ([#46](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/46)) ([fc422d5](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/fc422d5ad2ccf28c886508afbf6af49369199d62))
+* rename app hub service id ([#48](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/48)) ([5cfe999](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/5cfe999196c3fd9129c8722ae0dfae88b16502fc))
+* Update name for serverless negs and change in validation for name ([#50](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/50)) ([6f3aa1d](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/6f3aa1d5687d8ffe36486c8ab104a475b644b264))
+
 ## [0.4.3](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.4.2...v0.4.3) (2025-04-21)
 
 
