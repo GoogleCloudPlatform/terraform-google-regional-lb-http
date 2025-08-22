@@ -125,7 +125,7 @@ resource "google_vpc_access_connector" "default" {
 
 module "frontend-service" {
   source       = "GoogleCloudPlatform/cloud-run/google//modules/v2"
-  version      = "~> 0.17.0"
+  version      = "~> 0.21.0"
   project_id   = var.project_id
   location     = "us-central1"
   service_name = "fs-gce-int"
