@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+locals {
+  iap_access_members = var.iap_config.enable ? coalesce(var.iap_config.iap_members, []) : []
+}
+
 resource "google_compute_region_backend_service" "default" {
   provider = google-beta
 
@@ -60,6 +64,15 @@ resource "google_compute_region_backend_service" "default" {
     content {
       group           = google_compute_region_network_endpoint_group.serverless_negs["neg-${var.name}-${backend.value.region}-${substr(md5(backend.value.service_name), 0, 4)}"].id
       capacity_scaler = var.load_balancing_scheme != "INTERNAL" ? backend.value.capacity_scaler : null
+    }
+  }
+
+  dynamic "iap" {
+    for_each = var.iap_config.enable ? [1] : []
+    content {
+      oauth2_client_id     = lookup(var.iap_config, "oauth2_client_id", "")
+      enabled              = var.iap_config.enable
+      oauth2_client_secret = lookup(var.iap_config, "oauth2_client_secret", "")
     }
   }
 }
@@ -216,4 +229,13 @@ resource "google_compute_region_network_endpoint_group" "serverless_negs" {
   lifecycle {
     create_before_destroy = true
   }
+}
+
+resource "google_iap_web_region_backend_service_iam_member" "member" {
+  for_each                   = toset(local.iap_access_members)
+  project                    = google_compute_region_backend_service.default.project
+  region                     = google_compute_region_backend_service.default.region
+  web_region_backend_service = google_compute_region_backend_service.default.name
+  role                       = "roles/iap.httpsResourceAccessor"
+  member                     = each.value
 }
