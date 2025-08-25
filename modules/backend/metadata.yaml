@@ -32,6 +32,8 @@ spec:
     description: {}
   content:
     examples:
+      - name: backend-services-with-iap
+        location: examples/backend-services-with-iap
       - name: cloud-run
         location: examples/cloud-run
       - name: gce-mig
@@ -184,6 +186,17 @@ spec:
       - name: timeout_sec
         description: This has different meaning for different type of load balancing. Please refer https://cloud.google.com/load-balancing/docs/backend-service#timeout-setting
         varType: number
+      - name: iap_config
+        description: Settings for enabling Cloud Identity Aware Proxy and Users/SAs to be given IAP HttpResourceAccessor access to the service.
+        varType: |-
+          object({
+              enable               = bool
+              oauth2_client_id     = optional(string)
+              oauth2_client_secret = optional(string)
+              iap_members          = optional(list(string))
+            })
+        defaultValue:
+          enable: false
     outputs:
       - name: backend_service_info
         description: Host, path and backend service mapping
@@ -193,6 +206,12 @@ spec:
             - backend_service: string
               host: string
               path: string
+      - name: project_id
+        description: Project ID of the service
+      - name: service_name
+        description: Name of the created service
+      - name: service_region
+        description: Region in which the service is created
   requirements:
     roles:
       - level: Project

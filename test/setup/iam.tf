@@ -32,7 +32,8 @@ locals {
       "roles/iam.serviceAccountUser",
       "roles/certificatemanager.owner",
       "roles/vpcaccess.admin",
-      "roles/iam.serviceAccountAdmin"
+      "roles/iam.serviceAccountAdmin",
+      "roles/iap.admin"
     ]
     frontend = [
       "roles/storage.admin",

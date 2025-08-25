@@ -15,6 +15,7 @@ This module creates `google_compute_region_backend_service` resource and its dep
 | groups | The list of backend instance group which serves the traffic. | <pre>list(object({<br>    group       = string<br>    description = optional(string)<br><br>    balancing_mode               = optional(string)<br>    capacity_scaler              = optional(number, 1.0)<br>    max_connections              = optional(number)<br>    max_connections_per_instance = optional(number)<br>    max_connections_per_endpoint = optional(number)<br>    max_rate                     = optional(number)<br>    max_rate_per_instance        = optional(number)<br>    max_rate_per_endpoint        = optional(number)<br>    max_utilization              = optional(number)<br>  }))</pre> | `[]` | no |
 | health\_check | Input for creating HttpHealthCheck or HttpsHealthCheck resource for health checking this BackendService. A health check must be specified unless the backend service uses an internet or serverless NEG as a backend. | <pre>object({<br>    host                = optional(string, null)<br>    request_path        = optional(string, null)<br>    request             = optional(string, null)<br>    response            = optional(string, null)<br>    port                = optional(number, null)<br>    port_name           = optional(string, null)<br>    proxy_header        = optional(string, null)<br>    port_specification  = optional(string, null)<br>    protocol            = optional(string, null)<br>    check_interval_sec  = optional(number, 10)<br>    timeout_sec         = optional(number, 10)<br>    healthy_threshold   = optional(number, 2)<br>    unhealthy_threshold = optional(number, 2)<br>    logging             = optional(bool, true)<br>  })</pre> | `null` | no |
 | host\_path\_mappings | The list of host/path for which traffic should be sent to this backend service | <pre>list(object({<br>    host = string<br>    path = string<br>  }))</pre> | <pre>[<br>  {<br>    "host": "*",<br>    "path": "/*"<br>  }<br>]</pre> | no |
+| iap\_config | Settings for enabling Cloud Identity Aware Proxy and Users/SAs to be given IAP HttpResourceAccessor access to the service. | <pre>object({<br>    enable               = bool<br>    oauth2_client_id     = optional(string)<br>    oauth2_client_secret = optional(string)<br>    iap_members          = optional(list(string))<br>  })</pre> | <pre>{<br>  "enable": false<br>}</pre> | no |
 | load\_balancing\_scheme | Load balancing scheme type (EXTERNAL for classic external load balancer, EXTERNAL\_MANAGED for Envoy-based load balancer, and INTERNAL\_MANAGED for internal load balancer) | `string` | `"EXTERNAL_MANAGED"` | no |
 | locality\_lb\_policy | The load balancing algorithm used within the scope of the locality. | `string` | `null` | no |
 | name | Name for the load balancer backend service. | `string` | n/a | yes |
@@ -34,5 +35,8 @@ This module creates `google_compute_region_backend_service` resource and its dep
 | Name | Description |
 |------|-------------|
 | backend\_service\_info | Host, path and backend service mapping |
+| project\_id | Project ID of the service |
+| service\_name | Name of the created service |
+| service\_region | Region in which the service is created |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
