@@ -190,3 +190,14 @@ variable "timeout_sec" {
   type        = number
   default     = null
 }
+
+variable "iap_config" {
+  description = "Settings for enabling Cloud Identity Aware Proxy and Users/SAs to be given IAP HttpResourceAccessor access to the service."
+  type = object({
+    enable               = bool
+    oauth2_client_id     = optional(string)
+    oauth2_client_secret = optional(string)
+    iap_members          = optional(list(string))
+  })
+  default = { enable = false }
+}
