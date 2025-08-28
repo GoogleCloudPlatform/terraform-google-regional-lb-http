@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.5.0...v0.6.0) (2025-08-28)
+
+
+### Features
+
+* **deps:** Update Terraform Google Provider to v7 (major) ([#52](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/52)) ([7f2f320](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/7f2f32080f32f1760b85b6733df4cea562f75ed8))
+
 ## [0.5.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.4.3...v0.5.0) (2025-08-20)
 
 
