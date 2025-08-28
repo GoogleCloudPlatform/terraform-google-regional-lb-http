@@ -19,7 +19,7 @@ module "lb-backend-iap" {
   version = "~> 0.4.0"
 
   project_id = var.project_id
-  region     = var.region
+  region     = "us-central1"
   name       = "regional-backend-service-with-iap"
   iap_config = {
     enable      = true

@@ -29,7 +29,7 @@ func TestLbBackendServiceIap(t *testing.T) {
 	backendServiceWithIAP.DefineVerify(func(assert *assert.Assertions) {
 
 		projectID := backendServiceWithIAP.GetTFSetupStringOutput("project_id")
-		serviceName := "backend-with-iap"
+		serviceName := "regional-backend-service-with-iap"
 		region := "us-central1"
 
 		backendServiceDescribeCmd := gcloud.Run(t, "compute backend-services describe", gcloud.WithCommonArgs([]string{serviceName, "--project", projectID, "--region", region ,"--format", "json"}))
