@@ -35,8 +35,5 @@ This module creates `google_compute_region_backend_service` resource and its dep
 | Name | Description |
 |------|-------------|
 | backend\_service\_info | Host, path and backend service mapping |
-| project\_id | Project ID of the service |
-| service\_name | Name of the created service |
-| service\_region | Region in which the service is created |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

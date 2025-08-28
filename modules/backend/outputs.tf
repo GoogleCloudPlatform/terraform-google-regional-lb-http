@@ -24,18 +24,3 @@ output "backend_service_info" {
     }
   ]
 }
-
-output "project_id" {
-  value       = google_compute_region_backend_service.default.project
-  description = "Project ID of the service"
-}
-
-output "service_name" {
-  value       = google_compute_region_backend_service.default.name
-  description = "Name of the created service"
-}
-
-output "service_region" {
-  value       = google_compute_region_backend_service.default.region
-  description = "Region in which the service is created"
-}

@@ -206,12 +206,6 @@ spec:
             - backend_service: string
               host: string
               path: string
-      - name: project_id
-        description: Project ID of the service
-      - name: service_name
-        description: Name of the created service
-      - name: service_region
-        description: Region in which the service is created
   requirements:
     roles:
       - level: Project

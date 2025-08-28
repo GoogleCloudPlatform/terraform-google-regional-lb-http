@@ -13,18 +13,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-output "project_id" {
-  value       = module.lb-backend-iap.project_id
-  description = "Project ID of the service"
-}
-
-output "service_name" {
-  value       = module.lb-backend-iap.service_name
-  description = "Name of the created service"
-}
-
-output "service_region" {
-  value       = module.lb-backend-iap.service_region
-  description = "Region in which the service is created"
-}
