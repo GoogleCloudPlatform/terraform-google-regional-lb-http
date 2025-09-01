@@ -36,6 +36,8 @@ spec:
       - name: frontend
         location: modules/frontend
     examples:
+      - name: backend-services-with-iap
+        location: examples/backend-services-with-iap
       - name: cloud-run
         location: examples/cloud-run
       - name: gce-mig

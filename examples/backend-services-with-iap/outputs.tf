@@ -1,5 +1,5 @@
 /**
- * Copyright 2024 Google LLC
+ * Copyright 2025 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,28 +14,17 @@
  * limitations under the License.
  */
 
-output "backend_service_info" {
-  description = "Host, path and backend service mapping"
-  value = [
-    for mapping in var.host_path_mappings : {
-      host            = mapping.host
-      path            = mapping.path
-      backend_service = google_compute_region_backend_service.default.self_link
-    }
-  ]
-}
-
 output "project_id" {
-  value       = google_compute_region_backend_service.default.project
+  value       = module.lb-backend-iap.project_id
   description = "Project ID of the service"
 }
 
 output "service_name" {
-  value       = google_compute_region_backend_service.default.name
+  value       = module.lb-backend-iap.service_name
   description = "Name of the created service"
 }
 
 output "service_region" {
-  value       = google_compute_region_backend_service.default.region
+  value       = module.lb-backend-iap.service_region
   description = "Region in which the service is created"
 }
