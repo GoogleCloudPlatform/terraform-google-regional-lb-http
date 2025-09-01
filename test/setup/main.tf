@@ -45,6 +45,7 @@ locals {
       "iam.googleapis.com",
       "certificatemanager.googleapis.com",
       "vpcaccess.googleapis.com",
+      "iap.googleapis.com",
     ]
   }
 }
