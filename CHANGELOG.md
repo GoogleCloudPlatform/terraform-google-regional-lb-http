@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.6.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.5.0...v0.6.0) (2025-09-03)
+
+
+### Features
+
+* adding IAP config object for regional lb ([#54](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/54)) ([1de6dbd](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/1de6dbdf04790f6f791d4039651efbf0f9c5d74d))
+* **deps:** Update Terraform Google Provider to v7 (major) ([#52](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/52)) ([7f2f320](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/7f2f32080f32f1760b85b6733df4cea562f75ed8))
+
+
+### Bug Fixes
+
+* added missing validations ([#49](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/49)) ([8c09d62](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/8c09d6275a5f147197691810c9425905cd0d728d))
+
 ## [0.5.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.4.3...v0.5.0) (2025-08-20)
 
 
