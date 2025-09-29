@@ -47,7 +47,7 @@ spec:
         firewall_networks:
           name: firewall_networks
           title: Firewall Networks
-          regexValidation: "^(projects/[a-z][a-z0-9-]{4,28}[a-z0-9]/global/networks/[a-zA-Z0-9-_]+|[a-zA-Z0-9-_]+)$"
+          regexValidation: ^(projects/[a-z][a-z0-9-]{4,28}[a-z0-9]/global/networks/[a-zA-Z0-9-_]+|[a-zA-Z0-9-_]+)$
           validation: Network must be a valid network name or a full resource path.
         firewall_projects:
           name: firewall_projects
@@ -57,7 +57,7 @@ spec:
         firewall_source_ranges:
           name: firewall_source_ranges
           title: Firewall Source Ranges
-          regexValidation: "^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])/([0-9]|[1-2][0-9]|3[0-2])$"
+          regexValidation: ^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])/([0-9]|[1-2][0-9]|3[0-2])$
           validation: Must be a valid CIDR range
         groups:
           name: groups
@@ -92,7 +92,7 @@ spec:
             host:
               name: host
               title: Host
-              regexValidation: "^(([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?[.])+[a-zA-Z]{2,63}|[0-9]{1,3}([.][0-9]{1,3}){3}|(\\[?[A-Fa-f0-9:]+\\]?))$"
+              regexValidation: ^(([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?[.])+[a-zA-Z]{2,63}|[0-9]{1,3}([.][0-9]{1,3}){3}|(\[?[A-Fa-f0-9:]+\]?))$
               validation: Must be a valid hostname (RFC 1035), IPv4 address, or IPv6 address
             request_path:
               name: request_path
@@ -119,14 +119,6 @@ spec:
               title: Port Name
               regexValidation: ^[a-z]([-a-z0-9]{0,61}[a-z0-9])?$
               validation: Must start with a lowercase letter, contain only lowercase letters, digits, or hyphens, and end with a letter or digit
-            proxy_header:
-              name: proxy_header
-              title: Proxy Header
-              enumValueLabels:
-                - label: NONE
-                  value: NONE
-                - label: PROXY_V1
-                  value: PROXY_V1
             port_specification:
               name: port_specification
               title: Port Specification
@@ -169,6 +161,29 @@ spec:
               title: Unhealthy Threshold
               min: 1
               max: 10
+            proxy_header:
+              name: proxy_header
+              title: Proxy Header
+              enumValueLabels:
+                - label: NONE
+                  value: NONE
+                - label: PROXY_V1
+                  value: PROXY_V1
+            request:
+              name: request
+              title: Request
+              regexValidation: ^[ -~]*$
+              validation: Must contain only ASCII characters
+            request_path:
+              name: request_path
+              title: Request Path
+              regexValidation: ^/.*$
+              validation: Must start with a forward slash `/` and can include any valid path characters.
+            response:
+              name: response
+              title: Response
+              regexValidation: ^[ -~]*$
+              validation: Must contain only ASCII characters
         host_path_mappings:
           name: host_path_mappings
           title: Host Path Mappings
@@ -236,6 +251,9 @@ spec:
               value: HTTP2
             - label: TCP
               value: TCP
+        psc_neg_backends:
+          name: psc_neg_backends
+          title: Psc Neg Backends
         region:
           name: region
           title: Region
@@ -253,6 +271,11 @@ spec:
               title: Capacity Scaler
               min: 0.0
               max: 1.0
+            service_name:
+              name: service_name
+              title: Service Name
+              regexValidation: ^[a-z]([-a-z0-9]{0,61}[a-z0-9])?$
+              validation: Must be a valid service name (lowercase, hyphens, numbers, up to 63 chars).
             type:
               name: type
               title: Type
@@ -263,11 +286,6 @@ spec:
                   value: cloud-function
                 - label: App Engine
                   value: app-engine
-            service_name:
-              name: service_name
-              title: Service Name
-              regexValidation: ^[a-z]([-a-z0-9]{0,61}[a-z0-9])?$
-              validation: Must be a valid service name (lowercase, hyphens, numbers, up to 63 chars).
         session_affinity:
           name: session_affinity
           title: Session Affinity

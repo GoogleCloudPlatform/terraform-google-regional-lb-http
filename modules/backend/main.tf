@@ -67,6 +67,14 @@ resource "google_compute_region_backend_service" "default" {
     }
   }
 
+  dynamic "backend" {
+    for_each = toset(var.psc_neg_backends)
+    content {
+      group           = google_compute_region_network_endpoint_group.psc_negs[backend.value.name].id
+      capacity_scaler = var.load_balancing_scheme != "INTERNAL" ? 1.0 : null
+    }
+  }
+
   dynamic "iap" {
     for_each = var.iap_config.enable ? [1] : []
     content {
@@ -224,6 +232,29 @@ resource "google_compute_region_network_endpoint_group" "serverless_negs" {
       service = each.value.service_name
       version = each.value.service_version
     }
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "google_compute_region_network_endpoint_group" "psc_negs" {
+  for_each = { for psc_neg_backend in var.psc_neg_backends :
+    psc_neg_backend.name => psc_neg_backend
+  }
+
+  provider              = google-beta
+  project               = var.project_id
+  name                  = each.key
+  network_endpoint_type = "PRIVATE_SERVICE_CONNECT"
+  region                = each.value.region
+  psc_target_service    = each.value.psc_target_service
+  network               = each.value.network
+  subnetwork            = each.value.subnetwork
+
+  psc_data {
+    producer_port = try(each.value.producer_port, null)
   }
 
   lifecycle {
