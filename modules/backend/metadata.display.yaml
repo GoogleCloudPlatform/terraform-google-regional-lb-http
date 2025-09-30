@@ -31,12 +31,10 @@ spec:
         affinity_cookie_ttl_sec:
           name: affinity_cookie_ttl_sec
           title: Affinity Cookie Ttl Sec
-          min: 0
           max: 86400
         connection_draining_timeout_sec:
           name: connection_draining_timeout_sec
           title: Connection Draining Timeout Sec
-          min: 0
           max: 3600
         description:
           name: description
@@ -78,37 +76,30 @@ spec:
             capacity_scaler:
               name: capacity_scaler
               title: Capacity Scaler
-              min: 0.0
-              max: 1.0
+              max: 1
             max_utilization:
               name: max_utilization
               title: Max Utilization
-              min: 0.0
-              max: 1.0
+              max: 1
         health_check:
           name: health_check
           title: Health Check
           properties:
+            check_interval_sec:
+              name: check_interval_sec
+              title: Check Interval Sec
+              min: 1
+              max: 300
+            healthy_threshold:
+              name: healthy_threshold
+              title: Healthy Threshold
+              min: 1
+              max: 10
             host:
               name: host
               title: Host
               regexValidation: ^(([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?[.])+[a-zA-Z]{2,63}|[0-9]{1,3}([.][0-9]{1,3}){3}|(\[?[A-Fa-f0-9:]+\]?))$
               validation: Must be a valid hostname (RFC 1035), IPv4 address, or IPv6 address
-            request_path:
-              name: request_path
-              title: Request Path
-              regexValidation: "^/.*$"
-              validation: Must start with a forward slash `/` and can include any valid path characters.
-            request:
-              name: request
-              title: Request
-              regexValidation: "^[ -~]*$"
-              validation: Must contain only ASCII characters
-            response:
-              name: response
-              title: Response
-              regexValidation: "^[ -~]*$"
-              validation: Must contain only ASCII characters
             port:
               name: port
               title: Port
@@ -141,26 +132,6 @@ spec:
                   value: HTTP2
                 - label: TCP
                   value: TCP
-            check_interval_sec:
-              name: check_interval_sec
-              title: Check Interval Sec
-              min: 1
-              max: 300
-            timeout_sec:
-              name: timeout_sec
-              title: Timeout Sec
-              min: 1
-              max: 300
-            healthy_threshold:
-              name: healthy_threshold
-              title: Healthy Threshold
-              min: 1
-              max: 10
-            unhealthy_threshold:
-              name: unhealthy_threshold
-              title: Unhealthy Threshold
-              min: 1
-              max: 10
             proxy_header:
               name: proxy_header
               title: Proxy Header
@@ -184,6 +155,16 @@ spec:
               title: Response
               regexValidation: ^[ -~]*$
               validation: Must contain only ASCII characters
+            timeout_sec:
+              name: timeout_sec
+              title: Timeout Sec
+              min: 1
+              max: 300
+            unhealthy_threshold:
+              name: unhealthy_threshold
+              title: Unhealthy Threshold
+              min: 1
+              max: 10
         host_path_mappings:
           name: host_path_mappings
           title: Host Path Mappings
@@ -269,8 +250,7 @@ spec:
             capacity_scaler:
               name: capacity_scaler
               title: Capacity Scaler
-              min: 0.0
-              max: 1.0
+              max: 1
             service_name:
               name: service_name
               title: Service Name
@@ -320,4 +300,4 @@ spec:
           name: timeout_sec
           title: Timeout Sec
           min: 1
-          max: 2147483647
+          max: 2147483600
