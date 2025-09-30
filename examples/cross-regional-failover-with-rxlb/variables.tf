@@ -1,15 +1,15 @@
 variable "project_id" {
-  description = "ID do projeto GCP"
+  description = "GCP project ID"
   type        = string
 }
 
 variable "project" {
-  description = "ID do projeto GCP (alias usado em alguns lugares)"
+  description = "GCP project ID (alias used in some places)"
   type        = string
 }
 
 variable "regions" {
-  description = "Regiões onde criar os ALBs regionais"
+  description = "Regions where to create regional ALBs"
   type        = map(string)
   default     = {
     "us-central1" = "us-central1"
@@ -18,7 +18,7 @@ variable "regions" {
 }
 
 variable "vm_subnet_cidrs" {
-  description = "CIDRs das subnets de VM por região"
+  description = "VM subnet CIDRs per region"
   type        = map(string)
   default     = {
     "us-central1" = "10.10.0.0/24"
@@ -27,7 +27,7 @@ variable "vm_subnet_cidrs" {
 }
 
 variable "proxy_subnet_cidrs" {
-  description = "CIDRs das proxy-only subnets por região"
+  description = "Proxy-only subnet CIDRs per region"
   type        = map(string)
   default     = {
     "us-central1" = "10.30.0.0/24"
@@ -35,15 +35,14 @@ variable "proxy_subnet_cidrs" {
   }
 }
 
-
 variable "default_region" {
-  description = "Região padrão usada para provider"
+  description = "Default region used for the provider"
   type        = string
   default     = "us-central1"
 }
 
 variable "region_to_zone" {
-  description = "Mapeamento região -> zona para os MIGs"
+  description = "Region -> zone mapping for MIGs"
   type        = map(string)
   default     = {
     "us-central1" = "us-central1-a"
@@ -52,43 +51,43 @@ variable "region_to_zone" {
 }
 
 variable "instance_image" {
-  description = "Imagem para instâncias de teste"
+  description = "Image for test instances"
   type        = string
   default     = "projects/debian-cloud/global/images/family/debian-11"
 }
 
 variable "instance_machine_type" {
-  description = "Tipo de máquina"
+  description = "Machine type"
   type        = string
   default     = "e2-medium"
 }
 
 variable "target_size" {
-  description = "Número de VMs por MIG"
+  description = "Number of VMs per MIG"
   type        = number
   default     = 2
 }
 
 variable "regional_hostname" {
-  description = "Hostname DNS usado para certificados e DNS records"
+  description = "DNS hostname used for certificates and DNS records"
   type        = string
   default     = "regional.example.com"
 }
 
 variable "enable_dns_records" {
-  description = "Se deve criar registros DNS"
+  description = "Whether to create DNS records"
   type        = bool
   default     = true
 }
 
 variable "create_public_zone" {
-  description = "Se deve criar nova managed zone pública"
+  description = "Whether to create a new public managed zone"
   type        = bool
   default     = true
 }
 
 variable "public_zone_name" {
-  description = "Nome da managed zone pública existente (se create_public_zone=false)"
+  description = "Name of an existing public managed zone (used if create_public_zone=false)"
   type        = string
   default     = "public-example-zone"
 }
