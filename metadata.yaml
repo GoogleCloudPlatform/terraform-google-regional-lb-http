@@ -38,6 +38,8 @@ spec:
     examples:
       - name: backend-services-with-iap
         location: examples/backend-services-with-iap
+      - name: backend-with-psc-neg
+        location: examples/backend-with-psc-neg
       - name: cloud-run
         location: examples/cloud-run
       - name: gce-mig
