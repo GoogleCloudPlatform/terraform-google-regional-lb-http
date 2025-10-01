@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.6.0...v0.6.1) (2025-09-30)
+
+
+### Bug Fixes
+
+* added missing validations ([#57](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/57)) ([1f27d7c](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/1f27d7c1a6226ff658fd82e174fc04dc512d74d4))
+
 ## [0.6.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.5.0...v0.6.0) (2025-09-03)
 
 
