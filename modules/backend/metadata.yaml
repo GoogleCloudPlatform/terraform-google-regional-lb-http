@@ -34,6 +34,8 @@ spec:
     examples:
       - name: backend-services-with-iap
         location: examples/backend-services-with-iap
+      - name: backend-with-psc-neg
+        location: examples/backend-with-psc-neg
       - name: cloud-run
         location: examples/cloud-run
       - name: gce-mig
@@ -83,6 +85,18 @@ spec:
               version: ">= 0.13"
             spec:
               outputExpr: "{\"region\": location, \"service_name\": service_name, \"type\": \"cloud-run\", \"service_version\": \"\", \"capacity_scaler\": 1.0}"
+      - name: psc_neg_backends
+        description: The list of Private Service Connect backends which serve the traffic.
+        varType: |-
+          list(object({
+              name               = string
+              region             = string
+              psc_target_service = string
+              network            = string
+              subnetwork         = string
+              producer_port      = optional(string)
+            }))
+        defaultValue: []
       - name: groups
         description: The list of backend instance group which serves the traffic.
         varType: |-
@@ -206,6 +220,8 @@ spec:
             - backend_service: string
               host: string
               path: string
+      - name: psc_negs
+        description: Private Service Connect backends that were created for this backend service
   requirements:
     roles:
       - level: Project
