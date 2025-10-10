@@ -28,3 +28,12 @@ output "sa_keys_per_module" {
   }
   sensitive = true
 }
+
+output "project_id" {
+  value = module.combined_project.project_id
+}
+
+output "sa_key" {
+  value     = google_service_account_key.int_test_combined.private_key
+  sensitive = true
+}

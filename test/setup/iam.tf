@@ -49,9 +49,9 @@ locals {
   extra_project_roles_for_tests = {}
 
   // Applied to all service accounts.
-  extra_required_folder_roles_for_tests = [
+  extra_folder_roles_for_tests = toset([
     "roles/compute.xpnAdmin"
-  ]
+  ])
 
   // A list of items like:
   // { module_name = "x", project_role = "role1"}
@@ -66,14 +66,17 @@ locals {
       ]
     ]
   )
+  combined_roles = toset([for entry in local.module_role_combinations: entry.project_role])
+
   module_folder_role_combinations = flatten(
     [for module_name, _ in module.project :
-      [for role in extra_required_folder_roles_for_tests : {
+      [for role in local.extra_folder_roles_for_tests : {
         module_name = module_name
         folder_role = role
         }
       ]
     ]
+  )
 }
 
 resource "google_service_account" "int_test" {
@@ -116,4 +119,30 @@ resource "google_service_account_key" "int_test" {
   for_each = module.project
 
   service_account_id = google_service_account.int_test[each.key].id
+}
+
+resource "google_service_account" "int_test_combined" {
+  project      = module.combined_project.project_id
+  account_id   = "ci-account"
+  display_name = "ci-account"
+}
+
+resource "google_folder_iam_member" "int_test_combined" {
+  for_each = local.extra_folder_roles_for_tests
+
+  folder = "folders/${var.folder_id}"
+  role   = each.key
+  member = "serviceAccount:${google_service_account.int_test_combined.email}"
+}
+
+resource "google_project_iam_member" "int_test_combined" {
+  for_each = local.combined_roles
+
+  project = module.combined_project.project_id
+  role    = each.key
+  member  = "serviceAccount:${google_service_account.int_test_combined.email}"
+}
+
+resource "google_service_account_key" "int_test_combined" {
+  service_account_id = google_service_account.int_test_combined.id
 }

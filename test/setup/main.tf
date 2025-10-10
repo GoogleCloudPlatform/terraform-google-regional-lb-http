@@ -53,9 +53,10 @@ locals {
     for module, services in local.per_module_services :
     module => setunion(services, lookup(local.extra_services_for_tests, module, []))
   }
+  combined_test_services = tolist(toset(flatten(values(local.per_module_test_services))))
 }
 
-module "project-ci-regional-lb-http" {
+module "project" {
   for_each = local.per_module_test_services
 
   source  = "terraform-google-modules/project-factory/google"
@@ -63,7 +64,6 @@ module "project-ci-regional-lb-http" {
 
   name                        = "ci-int-regional-lb-http"
   random_project_id           = true
-  random_project_id_length    = 8
   org_id                      = var.org_id
   folder_id                   = var.folder_id
   billing_account             = var.billing_account
@@ -73,5 +73,23 @@ module "project-ci-regional-lb-http" {
   deletion_policy             = "DELETE"
 
   activate_apis = each.value
+}
+
+// For the tests that use mutiple modules.
+module "combined_project" {
+  source  = "terraform-google-modules/project-factory/google"
+  version = "~> 18.0"
+
+  name                        = "ci-int-regional-lb-http"
+  random_project_id           = true
+  org_id                      = var.org_id
+  folder_id                   = var.folder_id
+  billing_account             = var.billing_account
+  default_service_account     = "keep"
+  disable_dependent_services  = false
+  disable_services_on_destroy = false
+  deletion_policy             = "DELETE"
+
+  activate_apis = local.combined_test_services
 }
 
