@@ -46,32 +46,103 @@ locals {
     ]
   }
 
-  int_required_project_roles = tolist(toset(flatten(values(local.per_module_roles))))
-  int_required_folder_roles = [
+  extra_project_roles_for_tests = {}
+
+  // Applied to all service accounts.
+  extra_folder_roles_for_tests = toset([
     "roles/compute.xpnAdmin"
-  ]
+  ])
+
+  // A list of items like:
+  // { module_name = "x", project_role = "role1"}
+  // { module_name = "x", project_role = "role2"}
+  // { module_name = "y", project_role = "role3"}
+  module_role_combinations = flatten(
+    [for module_name, _ in module.project :
+      [for role in setunion(local.per_module_roles[module_name], lookup(local.extra_project_roles_for_tests, module_name, [])) : {
+        module_name  = module_name
+        project_role = role
+        }
+      ]
+    ]
+  )
+  combined_roles = toset([for entry in local.module_role_combinations: entry.project_role])
+
+  module_folder_role_combinations = flatten(
+    [for module_name, _ in module.project :
+      [for role in local.extra_folder_roles_for_tests : {
+        module_name = module_name
+        folder_role = role
+        }
+      ]
+    ]
+  )
 }
 
 resource "google_service_account" "int_test" {
-  project      = module.project-ci-regional-lb-http.project_id
-  account_id   = "ci-int-lb-http"
-  display_name = "ci-int-lb-http"
+  for_each = module.project
+
+  project      = each.value.project_id
+  account_id   = "ci-account"
+  display_name = "ci-account"
 }
 
 resource "google_folder_iam_member" "int_test" {
-  count  = length(local.int_required_folder_roles)
+  for_each = {
+    for combination in local.module_folder_role_combinations :
+    "${combination.module_name}.${combination.folder_role}" => {
+      service_account = google_service_account.int_test[combination.module_name]
+      folder_role     = combination.folder_role
+    }
+  }
+
   folder = "folders/${var.folder_id}"
-  role   = local.int_required_folder_roles[count.index]
-  member = "serviceAccount:${google_service_account.int_test.email}"
+  role   = each.value.folder_role
+  member = "serviceAccount:${each.value.service_account.email}"
 }
 
 resource "google_project_iam_member" "int_test" {
-  count   = length(local.int_required_project_roles)
-  project = module.project-ci-regional-lb-http.project_id
-  role    = local.int_required_project_roles[count.index]
-  member  = "serviceAccount:${google_service_account.int_test.email}"
+  for_each = {
+    for combination in local.module_role_combinations :
+    "${combination.module_name}.${combination.project_role}" => {
+      service_account = google_service_account.int_test[combination.module_name]
+      project_role    = combination.project_role
+    }
+  }
+
+  project = each.value.service_account.project
+  role    = each.value.project_role
+  member  = "serviceAccount:${each.value.service_account.email}"
 }
 
 resource "google_service_account_key" "int_test" {
-  service_account_id = google_service_account.int_test.id
+  for_each = module.project
+
+  service_account_id = google_service_account.int_test[each.key].id
+}
+
+resource "google_service_account" "int_test_combined" {
+  project      = module.combined_project.project_id
+  account_id   = "ci-account"
+  display_name = "ci-account"
+}
+
+resource "google_folder_iam_member" "int_test_combined" {
+  for_each = local.extra_folder_roles_for_tests
+
+  folder = "folders/${var.folder_id}"
+  role   = each.key
+  member = "serviceAccount:${google_service_account.int_test_combined.email}"
+}
+
+resource "google_project_iam_member" "int_test_combined" {
+  for_each = local.combined_roles
+
+  project = module.combined_project.project_id
+  role    = each.key
+  member  = "serviceAccount:${google_service_account.int_test_combined.email}"
+}
+
+resource "google_service_account_key" "int_test_combined" {
+  service_account_id = google_service_account.int_test_combined.id
 }

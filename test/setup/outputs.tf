@@ -14,11 +14,26 @@
  * limitations under the License.
  */
 
+// project_ids_per_module is resolved to `project_id` by the tft test framework.
+output "project_ids_per_module" {
+  value = {
+    for module_name, v in module.project : module_name => v.project_id
+  }
+}
+
+// `sa_keys_per_module` is resolved to `sa_key` by the tft test framework.
+output "sa_keys_per_module" {
+  value = {
+    for module_name, v in google_service_account_key.int_test : module_name => v.private_key
+  }
+  sensitive = true
+}
+
 output "project_id" {
-  value = module.project-ci-regional-lb-http.project_id
+  value = module.combined_project.project_id
 }
 
 output "sa_key" {
-  value     = google_service_account_key.int_test.private_key
+  value     = google_service_account_key.int_test_combined.private_key
   sensitive = true
 }
