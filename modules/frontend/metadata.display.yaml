@@ -100,7 +100,7 @@ spec:
         network:
           name: network
           title: Network
-          regexValidation: ^(projects/[a-z][a-z0-9-]{4,28}[a-z0-9]/global/networks/[a-zA-Z0-9-_]+|[a-zA-Z0-9-_]+)$
+          regexValidation: "^(projects/[a-z][a-z0-9-]{4,28}[a-z0-9]/global/networks/[a-zA-Z0-9-_]+|[a-zA-Z0-9-_]+)$"
           validation: Network must be a valid network name or a full resource path.
         private_key:
           name: private_key
@@ -111,9 +111,9 @@ spec:
         proxy_only_subnet_ip:
           name: proxy_only_subnet_ip
           title: Proxy Only Subnet Ip
-          regexValidation: ^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])/([0-9]|[1-2][0-9]|3[0-2])$
-          validation: Must be a valid CIDR range
           level: 1
+          regexValidation: "^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])/([0-9]|[1-2][0-9]|3[0-2])$"
+          validation: Must be a valid CIDR range
         random_certificate_suffix:
           name: random_certificate_suffix
           title: Random Certificate Suffix
@@ -123,7 +123,7 @@ spec:
         server_tls_policy:
           name: server_tls_policy
           title: Server Tls Policy
-          regexValidation: ^projects/[a-z0-9][-a-z0-9]{4,28}[a-z0-9]/locations/[a-z0-9-]+/serverTlsPolicies/[a-z]([-a-z0-9]{0,61}[a-z0-9])$
+          regexValidation: "^projects/[a-z0-9][-a-z0-9]{4,28}[a-z0-9]/locations/[a-z0-9-]+/serverTlsPolicies/[a-z]([-a-z0-9]{0,61}[a-z0-9])$"
           validation: Must be a valid server TLS policy full resource URL.
         ssl:
           name: ssl
@@ -131,38 +131,38 @@ spec:
         ssl_certificates:
           name: ssl_certificates
           title: Ssl Certificates
-          regexValidation: ^(https://www.googleapis.com/compute/v1/)?projects/[a-z0-9][-a-z0-9]{4,28}[a-z0-9]/global/sslCertificates/[a-z]([-a-z0-9]{0,61}[a-z0-9])$|^[a-z]([-a-z0-9]{0,61}[a-z0-9])$
+          regexValidation: "^(https://www.googleapis.com/compute/v1/)?projects/[a-z0-9][-a-z0-9]{4,28}[a-z0-9]/global/sslCertificates/[a-z]([-a-z0-9]{0,61}[a-z0-9])$|^[a-z]([-a-z0-9]{0,61}[a-z0-9])$"
           validation: Must be a valid SSL certificate resource URL.
         ssl_policy:
           name: ssl_policy
           title: Ssl Policy
-          regexValidation: ^(https://www.googleapis.com/compute/v1/)?projects/[a-z0-9][-a-z0-9]{4,28}[a-z0-9]/global/sslPolicies/[a-z]([-a-z0-9]{0,61}[a-z0-9])$|^[a-z]([-a-z0-9]{0,61}[a-z0-9])$
+          regexValidation: "^(https://www.googleapis.com/compute/v1/)?projects/[a-z0-9][-a-z0-9]{4,28}[a-z0-9]/global/sslPolicies/[a-z]([-a-z0-9]{0,61}[a-z0-9])$|^[a-z]([-a-z0-9]{0,61}[a-z0-9])$"
           validation: Must be a valid SSL policy name or full resource URL.
         subnetwork:
           name: subnetwork
           title: Subnetwork
-          regexValidation: ^(projects/[a-z][a-z0-9-]{4,28}[a-z0-9]/regions/[a-z0-9-]+/subnetworks/[a-zA-Z0-9-_]+|[a-zA-Z0-9-_]+)$
-          validation: Must be a valid subnetwork name or a full resource path.
           level: 1
+          regexValidation: "^(projects/[a-z][a-z0-9-]{4,28}[a-z0-9]/regions/[a-z0-9-]+/subnetworks/[a-zA-Z0-9-_]+|[a-zA-Z0-9-_]+)$"
+          validation: Must be a valid subnetwork name or a full resource path.
         url_map_input:
           name: url_map_input
           title: Url Map Input
           properties:
-            backend_service:
-              name: backend_service
-              title: Backend Service
-              regexValidation: ^projects/[a-z][a-z0-9-]{4,28}[a-z0-9]/global/(backendServices|backendBuckets)/[a-z]([a-z0-9-]{0,61}[a-z0-9])?$
-              validation: Must be a reference to a global backend service or backend bucket in the format [projects/{project}/global/backendServices/{name}] or [projects/{project}/global/backendBuckets/{name}]
             host:
               name: host
               title: Host
-              regexValidation: ^([*]|([*][.])?[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?([.][a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)+)$
+              regexValidation: "^([*]|([*][.])?[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?([.][a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)+)$"
               validation: "Must be a valid host pattern: a fully qualified domain name (e.g., example.com), or a wildcard in the first component only (e.g., *.example.com). Must contain only lowercase letters, digits, hyphens (-), and dots (.), and be 1–255 characters long"
             path:
               name: path
               title: Path
-              regexValidation: ^(.*)$
+              regexValidation: "^(.*)$"
               validation: Path values must start with "/"
+            backend_service:
+              name: backend_service
+              title: Backend Service
+              regexValidation: "^projects/[a-z][a-z0-9-]{4,28}[a-z0-9]/global/(backendServices|backendBuckets)/[a-z]([a-z0-9-]{0,61}[a-z0-9])?$"
+              validation: Must be a reference to a global backend service or backend bucket in the format [projects/{project}/global/backendServices/{name}] or [projects/{project}/global/backendBuckets/{name}]
         url_map_resource_uri:
           name: url_map_resource_uri
           title: Url Map Resource Uri
