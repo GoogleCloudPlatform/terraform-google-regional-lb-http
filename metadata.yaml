@@ -24,7 +24,7 @@ spec:
     source:
       repo: https://github.com/googlestaging/terraform-google-regional-lb-http.git
       sourceType: git
-    version: 0.6.1
+    version: 0.7.0
     actuationTool:
       flavor: Terraform
       version: ">= 1.3"
