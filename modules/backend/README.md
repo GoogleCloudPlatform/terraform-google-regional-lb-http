@@ -22,6 +22,7 @@ This module creates `google_compute_region_backend_service` resource and its dep
 | port\_name | Name of backend port. The same name should appear in the instance groups referenced by this service. Required when the load balancing scheme is EXTERNAL. | `string` | `"http"` | no |
 | project\_id | The project to deploy load balancer backend resources. | `string` | n/a | yes |
 | protocol | The protocol this BackendService uses to communicate with backends. | `string` | `"HTTP"` | no |
+| psc\_neg\_backends | The list of Private Service Connect backends which serve the traffic. | <pre>list(object({<br>    name               = string<br>    region             = string<br>    psc_target_service = string<br>    network            = string<br>    subnetwork         = string<br>    producer_port      = optional(string)<br>  }))</pre> | `[]` | no |
 | region | The region where the load balancer backend service will be created | `string` | n/a | yes |
 | security\_policy | The resource URL for the security policy to associate with the backend service | `string` | `null` | no |
 | serverless\_neg\_backends | The list of serverless backends which serves the traffic. A region can have only one serverless backend. | <pre>list(object({<br>    region          = string<br>    type            = string // cloud-run, cloud-function, and app-engine<br>    service_name    = string<br>    service_version = optional(string)<br>    capacity_scaler = optional(number, 1.0)<br>  }))</pre> | `[]` | no |
@@ -35,5 +36,6 @@ This module creates `google_compute_region_backend_service` resource and its dep
 | Name | Description |
 |------|-------------|
 | backend\_service\_info | Host, path and backend service mapping |
+| psc\_negs | Private Service Connect backends that were created for this backend service |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
