@@ -27,6 +27,7 @@ resource "google_compute_region_security_policy" "armor" {
   for_each = var.regions
   name     = "regional-${each.key}-armor"
   region   = each.key
+  type     = "CLOUD_ARMOR"
 
   rules {
     priority = 1000
@@ -58,6 +59,10 @@ resource "google_compute_instance_template" "tmpl" {
   name_prefix  = "regional-${each.key}-tmpl"
   machine_type = var.instance_machine_type
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   disk {
     source_image = var.instance_image
     auto_delete  = true
@@ -66,8 +71,9 @@ resource "google_compute_instance_template" "tmpl" {
 
   network_interface {
     subnetwork = google_compute_subnetwork.vm[each.key].self_link
+    access_config {}
   }
-
+  
   metadata_startup_script = <<-EOT
     #!/bin/bash
     apt-get update -y
@@ -147,14 +153,20 @@ resource "google_compute_region_target_http_proxy" "http" {
 }
 
 resource "google_compute_region_target_https_proxy" "https" {
+  provider = "google-beta"
   for_each = var.regions
   name     = "regional-${each.key}-https-proxy"
   region   = each.key
   url_map  = google_compute_region_url_map.um[each.key].self_link
 
   certificate_manager_certificates = [
-    google_certificate_manager_certificate.cert[each.key].id
+     google_certificate_manager_certificate.cert[each.key].id
   ]
+
+  depends_on = [
+    google_certificate_manager_certificate.cert
+  ]
+  
 }
 
 resource "google_compute_address" "addr" {
@@ -192,7 +204,12 @@ resource "google_compute_forwarding_rule" "https" {
 }
 
 resource "google_dns_record_set" "regional_geo_a" {
-  count = var.enable_dns_records && length(local.dns_managed_zone_name) > 0 ? 1 : 0
+  count = var.enable_dns_records && length(local.ordered_regions) > 0 ? 1 : 0
+
+  lifecycle {
+    replace_triggered_by  = [google_compute_address.addr]
+    ignore_changes        = [rrdatas]
+  }
 
   managed_zone = local.dns_managed_zone_name
   name         = "${var.regional_hostname}."
@@ -200,6 +217,7 @@ resource "google_dns_record_set" "regional_geo_a" {
   ttl          = 60
 
   routing_policy {
+    enable_geo_fencing = false
     dynamic "geo" {
       for_each = var.regions
       content {
@@ -209,6 +227,7 @@ resource "google_dns_record_set" "regional_geo_a" {
     }
   }
 }
+
 resource "google_certificate_manager_dns_authorization" "auth" {
   for_each = var.regions
   provider = google-beta
@@ -218,27 +237,36 @@ resource "google_certificate_manager_dns_authorization" "auth" {
 }
 
 locals {
-  dns_managed_zone_name = var.create_public_zone && var.enable_dns_records ? google_dns_managed_zone.public_new[0].name : var.public_zone_name
+  ordered_regions = sort(keys(var.regions))
+  dns_managed_zone_name  = coalesce(
+    try(google_dns_managed_zone.public_new[0].name, null),
+    var.public_zone_name
+  )
 }
 
 resource "google_dns_record_set" "acme_txt" {
-  for_each     = (var.enable_dns_records && length(local.dns_managed_zone_name) > 0) ? google_certificate_manager_dns_authorization.auth : {}
+  for_each     = (var.enable_dns_records && length(local.ordered_regions) > 0) ? google_certificate_manager_dns_authorization.auth : {}
   managed_zone = local.dns_managed_zone_name
   name         = each.value.dns_resource_record[0].name
   type         = "TXT"
   ttl          = 60
   rrdatas      = [each.value.dns_resource_record[0].data]
 }
+
+
 resource "google_certificate_manager_certificate" "cert" {
   for_each = var.regions
   provider = google-beta
   name     = "regional-${each.key}-cm-cert"
-  location = each.key
+  location = each.key 
 
   managed {
     domains            = [var.regional_hostname]
     dns_authorizations = [google_certificate_manager_dns_authorization.auth[each.key].id]
   }
+  depends_on = [
+    google_dns_record_set.acme_txt
+  ]
 }
 
 resource "google_dns_managed_zone" "public_new" {
@@ -246,19 +274,6 @@ resource "google_dns_managed_zone" "public_new" {
   name        = format("public-%s", replace(var.regional_hostname, ".", "-"))
   dns_name    = "${var.regional_hostname}."
   description = "Public zone for ${var.regional_hostname}"
-}
-
-resource "google_dns_record_set" "regional_a" {
-  count = var.enable_dns_records && length(var.regions) > 0 ? 1 : 0
-
-  managed_zone = local.dns_managed_zone_name
-  name         = "${var.regional_hostname}."
-  type         = "A"
-  ttl          = 60
-
-  rrdatas = [
-    for r in keys(var.regions) : google_compute_address.addr[r].address
-  ]
 }
 
 resource "google_compute_firewall" "allow_hc" {
@@ -271,4 +286,19 @@ resource "google_compute_firewall" "allow_hc" {
   direction     = "INGRESS"
   source_ranges = ["130.211.0.0/22", "35.191.0.0/16"]
   target_tags   = ["allow-hc"]
+}
+
+resource "google_compute_firewall" "allow_proxy_to_backend" {
+  name    = "allow-proxy-to-backend"
+  network = google_compute_network.auto.name
+
+  direction     = "INGRESS"
+  priority      = 1000
+  source_ranges = ["35.191.0.0/16", "130.211.0.0/22"]
+  target_tags   = ["allow-proxy"]
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
 }
