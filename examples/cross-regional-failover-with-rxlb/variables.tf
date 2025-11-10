@@ -1,8 +1,3 @@
-variable "project_id" {
-  description = "GCP project ID"
-  type        = string
-}
-
 variable "project" {
   description = "GCP project ID (alias used in some places)"
   type        = string
