@@ -16,7 +16,7 @@
 
 module "lb-backend-iap" {
   source  = "GoogleCloudPlatform/regional-lb-http/google//modules/backend"
-  version = "~> 0.4.0"
+  version = "~> 0.7.0"
 
   project_id = var.project_id
   region     = "us-central1"

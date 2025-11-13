@@ -30,7 +30,7 @@ resource "google_compute_subnetwork" "default" {
 
 module "lb-http-backend" {
   source  = "GoogleCloudPlatform/regional-lb-http/google//modules/backend"
-  version = "~> 0.4.0"
+  version = "~> 0.7.0"
 
   project_id            = var.project_id
   region                = "us-central1"
@@ -56,7 +56,7 @@ module "lb-http-backend" {
 
 module "lb-http-frontend" {
   source  = "GoogleCloudPlatform/regional-lb-http/google//modules/frontend"
-  version = "~> 0.4.0"
+  version = "~> 0.7.0"
 
   project_id            = var.project_id
   region                = "us-central1"
@@ -125,7 +125,7 @@ resource "google_vpc_access_connector" "default" {
 
 module "frontend-service" {
   source       = "GoogleCloudPlatform/cloud-run/google//modules/v2"
-  version      = "~> 0.17.0"
+  version      = "~> 0.21.0"
   project_id   = var.project_id
   location     = "us-central1"
   service_name = "fs-gce-int"
