@@ -135,7 +135,7 @@ module "psc-neg-subnet" {
 
 module "lb-backend-psc-neg" {
   source  = "GoogleCloudPlatform/regional-lb-http/google//modules/backend"
-  version = "~> 0.4.0"
+  version = "~> 0.7.0"
 
   project_id            = var.project_id
   name                  = "backend-with-psc-neg"
@@ -155,7 +155,7 @@ module "lb-backend-psc-neg" {
 
 module "lb-frontend" {
   source  = "GoogleCloudPlatform/regional-lb-http/google//modules/frontend"
-  version = "~> 0.4.0"
+  version = "~> 0.7.0"
 
   project_id            = var.project_id
   name                  = "regional-lb-fe-psc-neg"
