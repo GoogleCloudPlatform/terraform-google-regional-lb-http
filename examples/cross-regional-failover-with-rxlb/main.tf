@@ -153,7 +153,7 @@ resource "google_compute_region_target_http_proxy" "http" {
 }
 
 resource "google_compute_region_target_https_proxy" "https" {
-  provider = "google-beta"
+  provider = google-beta
   for_each = var.regions
   name     = "regional-${each.key}-https-proxy"
   region   = each.key
@@ -289,13 +289,19 @@ resource "google_compute_firewall" "allow_hc" {
 }
 
 resource "google_compute_firewall" "allow_proxy_to_backend" {
-  name    = "allow-proxy-to-backend"
+  for_each = var.regions
+
+  name    = "allow-proxy-to-backend-${each.key}"
   network = google_compute_network.auto.name
 
-  direction     = "INGRESS"
-  priority      = 1000
-  source_ranges = ["35.191.0.0/16", "130.211.0.0/22"]
-  target_tags   = ["allow-proxy"]
+  direction = "INGRESS"
+  priority  = 1000
+
+  source_ranges = [
+    google_compute_subnetwork.proxy_only[each.key].ip_cidr_range
+  ]
+
+  target_tags = ["allow-proxy"]
 
   allow {
     protocol = "tcp"
