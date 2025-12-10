@@ -73,7 +73,7 @@ resource "google_compute_instance_template" "tmpl" {
     subnetwork = google_compute_subnetwork.vm[each.key].self_link
     access_config {}
   }
-  
+
   metadata_startup_script = <<-EOT
     #!/bin/bash
     apt-get update -y
@@ -129,7 +129,7 @@ resource "google_compute_region_backend_service" "bs" {
   timeout_sec           = 30
   health_checks         = [google_compute_region_health_check.hc[each.key].self_link]
 
-  security_policy       = google_compute_region_security_policy.armor[each.key].self_link
+  security_policy = google_compute_region_security_policy.armor[each.key].self_link
 
   backend {
     group           = google_compute_instance_group_manager.mig[each.key].instance_group
@@ -160,13 +160,13 @@ resource "google_compute_region_target_https_proxy" "https" {
   url_map  = google_compute_region_url_map.um[each.key].self_link
 
   certificate_manager_certificates = [
-     google_certificate_manager_certificate.cert[each.key].id
+    google_certificate_manager_certificate.cert[each.key].id
   ]
 
   depends_on = [
     google_certificate_manager_certificate.cert
   ]
-  
+
 }
 
 resource "google_compute_address" "addr" {
@@ -207,8 +207,8 @@ resource "google_dns_record_set" "regional_geo_a" {
   count = var.enable_dns_records && length(local.ordered_regions) > 0 ? 1 : 0
 
   lifecycle {
-    replace_triggered_by  = [google_compute_address.addr]
-    ignore_changes        = [rrdatas]
+    replace_triggered_by = [google_compute_address.addr]
+    ignore_changes       = [rrdatas]
   }
 
   managed_zone = local.dns_managed_zone_name
@@ -238,7 +238,7 @@ resource "google_certificate_manager_dns_authorization" "auth" {
 
 locals {
   ordered_regions = sort(keys(var.regions))
-  dns_managed_zone_name  = coalesce(
+  dns_managed_zone_name = coalesce(
     try(google_dns_managed_zone.public_new[0].name, null),
     var.public_zone_name
   )
@@ -258,7 +258,7 @@ resource "google_certificate_manager_certificate" "cert" {
   for_each = var.regions
   provider = google-beta
   name     = "regional-${each.key}-cm-cert"
-  location = each.key 
+  location = each.key
 
   managed {
     domains            = [var.regional_hostname]
