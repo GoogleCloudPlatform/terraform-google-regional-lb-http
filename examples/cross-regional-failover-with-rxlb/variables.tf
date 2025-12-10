@@ -6,7 +6,7 @@ variable "project" {
 variable "regions" {
   description = "Regions where to create regional ALBs"
   type        = map(string)
-  default     = {
+  default = {
     "us-central1" = "us-central1"
     "us-east1"    = "us-east1"
   }
@@ -15,7 +15,7 @@ variable "regions" {
 variable "vm_subnet_cidrs" {
   description = "VM subnet CIDRs per region"
   type        = map(string)
-  default     = {
+  default = {
     "us-central1" = "10.10.0.0/24"
     "us-east1"    = "10.20.0.0/24"
   }
@@ -24,7 +24,7 @@ variable "vm_subnet_cidrs" {
 variable "proxy_subnet_cidrs" {
   description = "Proxy-only subnet CIDRs per region"
   type        = map(string)
-  default     = {
+  default = {
     "us-central1" = "10.30.0.0/24"
     "us-east1"    = "10.40.0.0/24"
   }
@@ -39,7 +39,7 @@ variable "default_region" {
 variable "region_to_zone" {
   description = "Region -> zone mapping for MIGs"
   type        = map(string)
-  default     = {
+  default = {
     "us-central1" = "us-central1-a"
     "us-east1"    = "us-east1-b"
   }
