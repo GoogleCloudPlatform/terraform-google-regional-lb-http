@@ -236,6 +236,9 @@ spec:
               value: HTTP2
             - label: TCP
               value: TCP
+        psc_neg_backends:
+          name: psc_neg_backends
+          title: Psc Neg Backends
         region:
           name: region
           title: Region

@@ -55,6 +55,24 @@ variable "serverless_neg_backends" {
   }
 }
 
+variable "psc_neg_backends" {
+  description = "The list of Private Service Connect backends which serve the traffic."
+  type = list(object({
+    name               = string
+    region             = string
+    psc_target_service = string
+    network            = string
+    subnetwork         = string
+    producer_port      = optional(string)
+  }))
+  default = []
+
+  validation {
+    condition     = length(var.psc_neg_backends) < 2
+    error_message = "Only one Private Service Connect NEG can be attached to regional backend"
+  }
+}
+
 variable "groups" {
   description = "The list of backend instance group which serves the traffic."
   type = list(object({
@@ -200,4 +218,11 @@ variable "iap_config" {
     iap_members          = optional(list(string))
   })
   default = { enable = false }
+}
+
+check "backend_neg_type_exclusive" {
+  assert {
+    condition     = length(var.serverless_neg_backends) == 0 || length(var.psc_neg_backends) == 0
+    error_message = "The 'serverless_neg_backends' and 'psc_neg_backends' variables are mutually exclusive. Please specify only one."
+  }
 }

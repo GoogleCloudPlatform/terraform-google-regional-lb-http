@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.7.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.6.1...v0.7.0) (2025-10-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* Add support for PSC NEG in terraform-google-regional-lb-https module ([#58](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/58))
+
+### Features
+
+* Add support for PSC NEG in terraform-google-regional-lb-https module ([#58](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/58)) ([3481620](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/3481620a8fbc728e7873ea169ab67634203ed04f))
+
 ## [0.6.1](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.6.0...v0.6.1) (2025-09-30)
 
 
