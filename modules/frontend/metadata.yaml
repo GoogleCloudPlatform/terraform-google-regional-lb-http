@@ -184,8 +184,20 @@ spec:
       - name: external_ip
         description: The external IPv4 assigned to the fowarding rule.
         type: string
+      - name: http_forwarding_rule
+        description: The http forwarding rule created by this module.
+        type: string
+      - name: http_ipv6_forwarding_rule
+        description: The http forwarding rule created by this module.
+        type: string
       - name: http_proxy
         description: The HTTP proxy used by this module.
+        type: string
+      - name: https_forwarding_rule
+        description: The https IPv6 forwarding rule created by this module.
+        type: string
+      - name: https_ipv6_forwarding_rule
+        description: The https IPv6 forwarding rule created by this module.
         type: string
       - name: https_proxy
         description: The HTTPS proxy used by this module.
