@@ -86,20 +86,20 @@ output "apphub_service_uri" {
 
 output "http_forwarding_rule" {
   description = "The http forwarding rule created by this module."
-  value       = google_compute_forwarding_rule.default
+  value       = google_compute_forwarding_rule.default.self_link
 }
 
 output "http_ipv6_forwarding_rule" {
   description = "The http forwarding rule created by this module."
-  value       = google_compute_forwarding_rule.https_ipv6
+  value       = google_compute_forwarding_rule.https_ipv6.self_link
 }
 
 output "https_forwarding_rule" {
   description = "The https IPv6 forwarding rule created by this module."
-  value       = google_compute_forwarding_rule.https
+  value       = google_compute_forwarding_rule.https.self_link
 }
 
 output "https_ipv6_forwarding_rule" {
   description = "The https IPv6 forwarding rule created by this module."
-  value       = google_compute_forwarding_rule.https_ipv6
+  value       = google_compute_forwarding_rule.https_ipv6.self_link
 }
