@@ -92,7 +92,7 @@ spec:
             host:
               name: host
               title: Host
-              regexValidation: "^(([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?[.])+[a-zA-Z]{2,63}|[0-9]{1,3}([.][0-9]{1,3}){3}|(\[?[A-Fa-f0-9:]+\]?))$"
+              regexValidation: "^(([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?[.])+[a-zA-Z]{2,63}|[0-9]{1,3}([.][0-9]{1,3}){3}|(\\[?[A-Fa-f0-9:]+\\]?))$"
               validation: Must be a valid hostname (RFC 1035), IPv4 address, or IPv6 address
             request_path:
               name: request_path
@@ -123,10 +123,10 @@ spec:
               name: proxy_header
               title: Proxy Header
               enumValueLabels:
-              - label: NONE
-                value: NONE
-              - label: PROXY_V1
-                value: PROXY_V1
+                - label: NONE
+                  value: NONE
+                - label: PROXY_V1
+                  value: PROXY_V1
             port_specification:
               name: port_specification
               title: Port Specification
