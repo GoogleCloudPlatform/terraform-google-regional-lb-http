@@ -84,7 +84,7 @@ output "apphub_service_uri" {
   description = "A list of all App Hub service URIs, including HTTP, HTTPS, and IPv6 versions."
 }
 
-output "forwarding_rules" {
+output "forwarding_rule" {
   description = "A list of forwarding rules created by this module."
   value = concat(
     local.create_http_forward ? [
