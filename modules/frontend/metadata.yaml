@@ -186,7 +186,9 @@ spec:
         type: string
       - name: forwarding_rules
         description: A list of forwarding rules created by this module.
-        type: list(string)
+        type:
+          - list
+          - string
       - name: http_proxy
         description: The HTTP proxy used by this module.
         type: string
