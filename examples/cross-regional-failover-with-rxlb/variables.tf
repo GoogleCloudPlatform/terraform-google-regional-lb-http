@@ -1,8 +1,3 @@
-variable "project" {
-  description = "GCP project ID (alias used in some places)"
-  type        = string
-}
-
 variable "regions" {
   description = "Regions where to create regional ALBs"
   type        = map(string)
@@ -28,12 +23,6 @@ variable "proxy_subnet_cidrs" {
     "us-central1" = "10.30.0.0/24"
     "us-east1"    = "10.40.0.0/24"
   }
-}
-
-variable "default_region" {
-  description = "Default region used for the provider"
-  type        = string
-  default     = "us-central1"
 }
 
 variable "region_to_zone" {
