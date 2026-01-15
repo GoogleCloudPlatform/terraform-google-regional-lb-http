@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.8.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.7.0...v0.8.0) (2026-01-15)
+
+
+### Features
+
+* **compute_address:** Add connections field to metadata.yaml ([#72](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/72)) ([64e7b39](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/64e7b396d2193a44275163022c2bed914be716f8))
+
+
+### Bug Fixes
+
+* **integration tests:** Remove verification ([#74](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/74)) ([6198ce1](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/6198ce15af4251799824eca7818bb3ded8da0afc))
+
 ## [0.7.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.6.1...v0.7.0) (2025-10-14)
 
 
