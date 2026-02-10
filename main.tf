@@ -36,6 +36,8 @@ locals {
   first_host            = keys(local.backend_services_by_host)[0]
   first_path            = keys(local.backend_services_by_host[local.first_host])[0]
   first_backend_service = local.backend_services_by_host[local.first_host][local.first_path]
+
+  ssl_certificates = compact(concat(var.ssl_certificates, google_compute_ssl_certificate.default[*].self_link, google_compute_managed_ssl_certificate.default[*].self_link, ), )
 }
 
 resource "google_compute_region_backend_service" "default" {
@@ -311,15 +313,16 @@ resource "google_compute_region_target_http_proxy" "default" {
 
 # HTTPS proxy when ssl is true
 resource "google_compute_region_target_https_proxy" "default" {
-  project                     = var.project_id
-  count                       = var.ssl ? 1 : 0
-  name                        = "${var.name}-regional-https-proxy"
-  region                      = var.region
-  url_map                     = local.url_map
-  ssl_certificates            = compact(concat(var.ssl_certificates, google_compute_ssl_certificate.default[*].self_link, google_compute_managed_ssl_certificate.default[*].self_link, ), )
-  ssl_policy                  = var.ssl_policy
-  server_tls_policy           = var.server_tls_policy
-  http_keep_alive_timeout_sec = var.http_keep_alive_timeout_sec
+  project                          = var.project_id
+  count                            = var.ssl ? 1 : 0
+  name                             = "${var.name}-regional-https-proxy"
+  region                           = var.region
+  url_map                          = local.url_map
+  ssl_certificates                 = length(local.ssl_certificates) > 0 ? local.ssl_certificates : null
+  certificate_manager_certificates = var.certificate_manager_certificates
+  ssl_policy                       = var.ssl_policy
+  server_tls_policy                = var.server_tls_policy
+  http_keep_alive_timeout_sec      = var.http_keep_alive_timeout_sec
 }
 
 resource "google_compute_ssl_certificate" "default" {

@@ -199,6 +199,10 @@ spec:
         description: Bool to enable/disable random certificate name generation. Set and keep this to true if you need to change the SSL cert.
         varType: bool
         defaultValue: false
+      - name: certificate_manager_certificates
+        description: Certificate Manager cert self_link list. Requires `ssl` to be set to `true`
+        varType: list(string)
+        defaultValue: null
       - name: network
         description: Network for INTERNAL_SELF_MANAGED load balancing scheme
         varType: string
