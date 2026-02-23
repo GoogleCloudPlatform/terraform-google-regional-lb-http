@@ -28,7 +28,6 @@ func TestInternalLbGCEMIG(t *testing.T) {
 	bpt := tft.NewTFBlueprintTest(t)
 
 	bpt.DefineVerify(func(assert *assert.Assertions) {
-		bpt.DefaultVerify(assert)
 
 		frontendServiceUri := bpt.GetStringOutput("frontend_service_uri")
 

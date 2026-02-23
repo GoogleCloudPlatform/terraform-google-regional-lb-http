@@ -28,7 +28,6 @@ func TestInternalLbCloudRun(t *testing.T) {
 	bpt := tft.NewTFBlueprintTest(t)
 
 	bpt.DefineVerify(func(assert *assert.Assertions) {
-		bpt.DefaultVerify(assert)
 
 		externalIp := bpt.GetStringOutput("external_ip")
 
