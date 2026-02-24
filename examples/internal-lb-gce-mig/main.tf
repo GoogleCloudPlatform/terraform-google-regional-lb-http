@@ -71,7 +71,7 @@ module "lb-http-frontend" {
 
 module "instance_template" {
   source  = "terraform-google-modules/vm/google//modules/instance_template"
-  version = "~> 13.0"
+  version = "~> 14.0"
 
   project_id           = var.project_id
   region               = "us-central1"
@@ -100,7 +100,7 @@ module "instance_template" {
 
 module "mig" {
   source            = "terraform-google-modules/vm/google//modules/mig"
-  version           = "~> 13.0"
+  version           = "~> 14.0"
   instance_template = module.instance_template.self_link
   project_id        = var.project_id
   region            = "us-central1"
