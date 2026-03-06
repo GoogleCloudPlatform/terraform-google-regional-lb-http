@@ -83,3 +83,21 @@ output "apphub_service_uri" {
   )
   description = "A list of all App Hub service URIs, including HTTP, HTTPS, and IPv6 versions."
 }
+
+output "forwarding_rules" {
+  description = "A list of forwarding rules created by this module."
+  value = concat(
+    local.create_http_forward ? [
+      google_compute_forwarding_rule.default[0].self_link
+    ] : [],
+    var.ssl ? [
+      google_compute_forwarding_rule.https[0].self_link
+    ] : [],
+    (var.enable_ipv6 && local.create_http_forward) ? [
+      google_compute_forwarding_rule.http_ipv6[0].self_link
+    ] : [],
+    var.enable_ipv6 && var.ssl ? [
+      google_compute_forwarding_rule.https_ipv6[0].self_link
+    ] : []
+  )
+}
