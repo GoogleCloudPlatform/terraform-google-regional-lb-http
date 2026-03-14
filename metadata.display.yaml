@@ -123,6 +123,9 @@ spec:
         random_certificate_suffix:
           name: random_certificate_suffix
           title: Random Certificate Suffix
+        certificate_manager_certificates:
+          name: certificate_manager_certificates
+          title: Certificate Manager Certificates
         region:
           name: region
           title: Region

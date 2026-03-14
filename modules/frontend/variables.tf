@@ -158,6 +158,12 @@ variable "random_certificate_suffix" {
   default     = false
 }
 
+variable "certificate_manager_certificates" {
+  description = "Certificate Manager cert self_link list. Requires `ssl` to be set to `true`"
+  type        = list(string)
+  default     = null
+}
+
 variable "http_port" {
   description = "The port for the HTTP load balancer"
   type        = number
