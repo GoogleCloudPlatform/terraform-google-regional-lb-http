@@ -30,6 +30,11 @@ output "ip_address_https" {
   value       = try(google_compute_forwarding_rule.https[0].ip_address, "")
 }
 
+output "forwarding_rule" {
+  description = "The provisioned forwarding rule."
+  value       = try(google_compute_forwarding_rule.default[0].self_link, google_compute_forwarding_rule.https[0].self_link, "")
+}
+
 output "http_proxy" {
   description = "The HTTP proxy used by this module."
   value       = google_compute_region_target_http_proxy.default[*].self_link

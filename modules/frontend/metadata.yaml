@@ -1,4 +1,4 @@
-# Copyright 2025 Google LLC
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -189,6 +189,9 @@ spec:
               service_uri: string
       - name: external_ip
         description: The external IPv4 assigned to the fowarding rule.
+        type: string
+      - name: forwarding_rule
+        description: The provisioned forwarding rule.
         type: string
       - name: http_proxy
         description: The HTTP proxy used by this module.
