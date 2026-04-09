@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.8.0...v0.9.0) (2026-04-09)
+
+
+### Features
+
+* Add forwarding_rule output ([#80](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/80)) ([b0ebf87](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/b0ebf87a9b191a68a378b11bd73aec50d158c5ac))
+
 ## [0.8.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.7.0...v0.8.0) (2026-01-15)
 
 
