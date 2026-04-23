@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.10.0...v0.11.0) (2026-04-23)
+
+
+### Features
+
+* Add missing VPC connection for Regional LB Backend ([#86](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/86)) ([a2586f8](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/a2586f8d07f14e7bdb3d0a5588bc391112939bbb))
+
 ## [0.10.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.9.0...v0.10.0) (2026-04-13)
 
 
