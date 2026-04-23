@@ -163,7 +163,7 @@ spec:
         connections:
           - source:
               source: github.com/terraform-google-modules/terraform-google-network
-              version: ">= 18.0.0"
+              version: ">= 16.0.1"
             spec:
               outputExpr: "[network_name]"
       - name: firewall_projects
