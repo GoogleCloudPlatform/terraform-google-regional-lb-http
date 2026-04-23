@@ -160,6 +160,12 @@ spec:
         varType: list(string)
         defaultValue:
           - default
+        connections:
+          - source:
+              source: github.com/terraform-google-modules/terraform-google-network
+              version: ">= 18.0.0"
+            spec:
+              outputExpr: "[network_name]"
       - name: firewall_projects
         description: Names of the projects to create firewall rules in
         varType: list(string)
