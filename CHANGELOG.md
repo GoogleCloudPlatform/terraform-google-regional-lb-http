@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.11.0...v0.12.0) (2026-05-07)
+
+
+### Features
+
+* Downgrade version requirement for terraform-google-network ([#88](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/88)) ([89f5077](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/89f50774101c4dfca14e12732df43d563042293d))
+
 ## [0.11.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.10.0...v0.11.0) (2026-04-23)
 
 
