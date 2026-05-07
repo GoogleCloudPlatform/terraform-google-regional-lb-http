@@ -65,7 +65,7 @@ spec:
         connections:
           - source:
               source: github.com/terraform-google-modules/terraform-google-network
-              version: ">= 17.1.0"
+              version: ">= 16.0.1"
             spec:
               outputExpr: network_name
       - name: subnetwork
@@ -74,7 +74,7 @@ spec:
         connections:
           - source:
               source: github.com/terraform-google-modules/terraform-google-network
-              version: ">= 17.1.0"
+              version: ">= 16.0.1"
             spec:
               outputExpr: subnets_names[0]
       - name: create_proxy_only_subnet
