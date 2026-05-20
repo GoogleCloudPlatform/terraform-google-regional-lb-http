@@ -245,7 +245,7 @@ spec:
         security_policy:
           name: security_policy
           title: Security Policy
-          regexValidation: ^(projects/[a-z][a-z0-9-]{4,28}[a-z0-9]/global/securityPolicies/[a-z0-9-]+|[a-z0-9-]+)$"
+          regexValidation: "^(projects/[a-z][a-z0-9-]{4,28}[a-z0-9]/global/securityPolicies/[a-z0-9-]+|[a-z0-9-]+)$"
           validation: Must be a valid security policy name or full resource path in the format "projects/{project}/global/securityPolicies/{policy}"
         serverless_neg_backends:
           name: serverless_neg_backends
