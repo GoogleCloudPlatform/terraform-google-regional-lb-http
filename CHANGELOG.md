@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.2](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.12.1...v0.12.2) (2026-05-21)
+
+
+### Bug Fixes
+
+* add support for regional security policies in the security_policy regex ([#92](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/92)) ([c13697b](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/c13697b8aec4e89f23329d02d97fa30bb058c893))
+
 ## [0.12.1](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.12.0...v0.12.1) (2026-05-20)
 
 
