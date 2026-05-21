@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.1](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.12.0...v0.12.1) (2026-05-20)
+
+
+### Bug Fixes
+
+* added missing double quote in the security_policy regex ([#90](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/90)) ([0825a5e](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/0825a5ea8fa18bb1fcf8577b7776888901a9195c))
+
 ## [0.12.0](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.11.0...v0.12.0) (2026-05-07)
 
 
