@@ -71,6 +71,7 @@ spec:
       - name: subnetwork
         description: Subnetwork that the load balanced IP should belong to, used in internal load balancing
         varType: string
+        defaultValue: null
         connections:
           - source:
               source: github.com/terraform-google-modules/terraform-google-network
@@ -111,6 +112,7 @@ spec:
       - name: url_map_resource_uri
         description: The url_map resource to use. This is the resource uri of the url map created out of band.
         varType: string
+        defaultValue: null
       - name: create_address
         description: Create a new global IPv4 address
         varType: bool
@@ -118,6 +120,7 @@ spec:
       - name: address
         description: Existing IPv4 address to use (the actual IP address value)
         varType: string
+        defaultValue: null
         connections:
           - source:
               source: github.com/terraform-google-modules/terraform-google-address
@@ -135,6 +138,7 @@ spec:
       - name: ipv6_address
         description: An existing IPv6 address to use (the actual IP address value)
         varType: string
+        defaultValue: null
       - name: labels
         description: The labels to attach to resources created by this module
         varType: map(string)
@@ -150,9 +154,11 @@ spec:
       - name: private_key
         description: Content of the private SSL key. Requires `ssl` to be set to `true` and `create_ssl_certificate` set to `true`
         varType: string
+        defaultValue: null
       - name: certificate
         description: Content of the SSL certificate. Requires `ssl` to be set to `true` and `create_ssl_certificate` set to `true`
         varType: string
+        defaultValue: null
       - name: ssl_certificates
         description: SSL cert self_link list. Requires `ssl` to be set to `true`
         varType: list(string)
@@ -184,12 +190,15 @@ spec:
       - name: ssl_policy
         description: Selfink to SSL Policy
         varType: string
+        defaultValue: null
       - name: server_tls_policy
         description: The resource URL for the server TLS policy to associate with the https proxy service
         varType: string
+        defaultValue: null
       - name: http_keep_alive_timeout_sec
         description: Specifies how long to keep a connection open, after completing a response, while there is no matching traffic (in seconds).
         varType: number
+        defaultValue: null
     outputs:
       - name: apphub_service_uri
         description: A list of all App Hub service URIs, including HTTP, HTTPS, and IPv6 versions.
