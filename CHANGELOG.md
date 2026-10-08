@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.12.3](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.12.2...v0.12.3) (2026-10-08)
+
+
+### Bug Fixes
+
+* populate null defaultValue in regional-lb-backend blueprint metadata ([#97](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/97)) ([08177ed](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/08177ed09da49962d16a75ab4cf9b07de1bd1403))
+* populate null defaultValue in regional-lb-frontend blueprint metadata ([#96](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/issues/96)) ([c9191cd](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/commit/c9191cdcf8bb465b008f8bfc091f30d0c00e5816))
+
 ## [0.12.2](https://github.com/GoogleCloudPlatform/terraform-google-regional-lb-http/compare/v0.12.1...v0.12.2) (2026-05-21)
 
 
