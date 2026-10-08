@@ -136,6 +136,7 @@ spec:
       - name: description
         description: Description of the backend service.
         varType: string
+        defaultValue: null
       - name: health_check
         description: Input for creating HttpHealthCheck or HttpsHealthCheck resource for health checking this BackendService. A health check must be specified unless the backend service uses an internet or serverless NEG as a backend.
         varType: |-
@@ -155,6 +156,7 @@ spec:
               unhealthy_threshold = optional(number, 2)
               logging             = optional(bool, true)
             })
+        defaultValue: null
       - name: firewall_networks
         description: Names of the networks to create firewall rules in
         varType: list(string)
@@ -187,6 +189,7 @@ spec:
       - name: connection_draining_timeout_sec
         description: Time for which instance will be drained (not accept new connections, but still work to finish started).
         varType: number
+        defaultValue: null
       - name: enable_cdn
         description: Enable Cloud CDN for this BackendService.
         varType: bool
@@ -194,18 +197,23 @@ spec:
       - name: session_affinity
         description: "Type of session affinity to use. Possible values are: NONE, CLIENT_IP, CLIENT_IP_PORT_PROTO, CLIENT_IP_PROTO, GENERATED_COOKIE, HEADER_FIELD, HTTP_COOKIE, STRONG_COOKIE_AFFINITY."
         varType: string
+        defaultValue: null
       - name: affinity_cookie_ttl_sec
         description: Lifetime of cookies in seconds if session_affinity is GENERATED_COOKIE.
         varType: number
+        defaultValue: null
       - name: locality_lb_policy
         description: The load balancing algorithm used within the scope of the locality.
         varType: string
+        defaultValue: null
       - name: security_policy
         description: The resource URL for the security policy to associate with the backend service
         varType: string
+        defaultValue: null
       - name: timeout_sec
         description: This has different meaning for different type of load balancing. Please refer https://cloud.google.com/load-balancing/docs/backend-service#timeout-setting
         varType: number
+        defaultValue: null
       - name: iap_config
         description: Settings for enabling Cloud Identity Aware Proxy and Users/SAs to be given IAP HttpResourceAccessor access to the service.
         varType: |-
